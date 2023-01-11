@@ -1,0 +1,235 @@
+<style>
+    .plans-form{
+        background: #f2f2f2;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+    }
+    .col-4 {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    .fab.rounded{
+        border-radius: 50% !important;
+    }
+    .fab.rounded:hover{
+        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+        -webkit-transition: .15s ease-out;
+        transition: .15s ease-out;
+    }
+    .fab.rounded:hover > span{
+        font-weight: 600;
+        -webkit-transition: .15s ease-out;
+        transition: .15s ease-out;
+    }
+    .pulsestyle{
+        animation: pulse 2s infinite;
+    }
+    .plans-item{
+        background: #ebebfa;
+        border-radius: 12px;
+        padding: 12px 12px;
+        margin-bottom: 4px;
+    }
+    .plans-item:hover{
+        background: #dedef7;
+        cursor: pointer;
+        transform: scale(1.02);
+    }
+</style>
+<div class="container animation" style="padding-top: 16px">
+    <div class="row">
+        <div class="col-8">
+
+            <h1><span style="opacity: 0.5">Ihre</span> Ziele und Pläne</h1>
+            <h4 style="font-weight: 400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h4>
+
+            <div ng-hide="showAddPlans" style="margin-bottom: 12px">
+                <div class="btn-menu" style="padding: 16px">
+                    <button class="btn fab rounded"
+                            style="background: #6c5ce7;color: #FFFFFF;height: 80px;width: 80px"
+                            ng-click="showAddPlans=true"
+                            ng-class="{'pulsestyle':master.plans.length==0}"><span class="material-symbols-sharp" style="font-size: 48px">add</span></button>
+                    <button class="btn fab rounded" style="background: #a29bfe;color: #FFFFFF;height: 80px;width: 80px;margin-left: 16px"><span class="material-symbols-sharp" style="font-size: 48px">commit</span></button>
+                </div>
+                <h4 style="font-weight: 400" ng-hide="master.plans.length>0"><span style="opacity: 0.5">Bitte füge ein</span> Element <span style="opacity: 0.5">hinzu.</span></h4>
+            </div>
+
+            <div class="plans-form"
+                 ng-class="{'animation':showAddPlans==true}"
+                 ng-show="showAddPlans">
+                <div class="row">
+                    <div class="col">
+                        <h3 ng-hide="plans.id===undefined">Bearbeitung</h3>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="plans.text"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="range" class="form-range" min="0" max="2" id="customRange2" ng-model="plans.ranges" value="0">
+                        <p>{{plans.ranges}} // {{rangeCategory[plans.ranges]}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary" ng-click="add.plans(plans)">Speichern</button>
+                        <button class="btn btn-secondary" ng-click="showAddPlans=false">Schließen</button>
+                        <button class="btn btn-danger" ng-click="showAddPlans=false" ng-hide="plans.id===undefined">Löschen</button>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" class="form-control" placeholder="Betrag" ng-model="plans.amount">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="master.plans.length>0" style="padding: 0 8px">
+                <div class="col-4">
+                    <h4 style="font-weight: 400">Kurzfristig</h4>
+                    <div>
+                        <div ng-repeat="plans in master.plans | filter: {'range': 'Kurzfristig' }"
+                             class="plans-item animation"
+                             ng-click="editplans($index)">
+                            <div style="font-size: 24px" ng-show="plans.amount">{{plans.amount | currency:"EUR":0}}</div>
+                            <div style="opacity: 0.7">{{plans.text}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h4 style="font-weight: 400">Mittelfristig</h4>
+                    <div>
+                        <div ng-repeat="plans in master.plans | filter: {'range': 'Mittelfristig' }"
+                             class="plans-item animation">
+                            <div style="font-size: 24px" ng-show="plans.amount">{{plans.amount | currency:"EUR":0}}</div>
+                            <div style="opacity: 0.7">{{plans.text}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h4 style="font-weight: 400">Langfristig</h4>
+                    <div>
+                        <div ng-repeat="plans in master.plans | filter: {'range': 'Langfristig' }"
+                             class="plans-item animation">
+                            <div style="font-size: 24px" ng-show="plans.amount">{{plans.amount | currency:"EUR":0}}</div>
+                            <div style="opacity: 0.7">{{plans.text}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col">
+
+            <div style="background: #dedef7;border-radius: 12px; margin-bottom: 8px">
+
+                <div style="background: #ebebfa;border-radius: 12px;margin-bottom: 8px">
+                    <div style="background: #f7f7fd;padding: 12px;border-radius: 12px">
+                        <div style="display: inline-flex; width: 100%">
+                            <button class="btn fab round small" style="margin-right: 8px;background: #a29bfe"><span class="material-symbols-sharp">add</span></button>
+                            <div style="line-height: 40px">Vermögen bei der Santander Bank</div>
+                        </div>
+                        <table class="table" ng-show="master.data.lists.length > 0">
+                            <tbody>
+                            <tr ng-repeat="list in master.data.lists">
+                                <td>{{list.type}}</td>
+                                <td align="right">{{list.amount | currency:"EUR":0}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="padding: 12px">
+                        <div style="display: inline-flex; width: 100%">
+                            <button class="btn fab round small" style="margin-right: 8px;background: #a29bfe"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"><span class="material-symbols-sharp">add</span></button>
+                            <div style="line-height: 40px">Vermögen außerhalb der Santander Bank</div>
+                        </div>
+                        <table class="table" ng-show="master.data.assets.length > 0">
+                            <tbody>
+                            <tr ng-repeat="asset in master.data.assets">
+                                <td>{{asset.type}}</td>
+                                <td align="right">{{asset.amount | currency:"EUR":0}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="padding: 12px">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>Summe Gesamt</td>
+                            <td align="right">{{master.listsum  + master.assetsum | currency:"EUR":0}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="background: #e2e2e2;padding: 12px;border-radius: 12px; margin-bottom: 8px;">
+                <div style="display: inline-flex; width: 100%">
+                    <button class="btn fab round small" ng-click="addImmo()" style="margin-right: 8px;background: #a29bfe"><span class="material-symbols-sharp">add</span></button>
+                    <div style="line-height: 40px" ng-hide="showAddImmo || master.property.length>0">Keine Immobilien vorhanden</div>
+                    <div style="line-height: 40px" ng-show="!showAddImmo && master.property.length>0">weitere Hinzufügen</div>
+                    <input class="form-control" style="background: transparent; width: 100%;" ng-model="addproperty" ng-show="showAddImmo">
+                </div>
+                <hr ng-show="master.property.length > 0"/>
+                <table class="table" ng-show="master.property.length > 0">
+                    <tbody>
+                    <tr ng-repeat="x in master.property">
+                        <td>{{x.title}}</td>
+                        <td align="right">{{x.value | currency:"EUR":0}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="background: #f2f2f2;padding: 12px;border-radius: 12px; margin-bottom: 8px;">
+                <div style="display: inline-flex; width: 100%">
+                    <button class="btn fab round small" style="margin-right: 8px;background: #a29bfe"><span class="material-symbols-sharp">add</span></button>
+                    <div style="line-height: 40px">Einkommenssituation</div>
+                </div>
+                <div style="display: none">
+                    <div align="mb-2">
+                        Einkommenssituation (Überschuss: {{customer.income - customer.outcome}})
+                    </div>
+                    <input type="text" class="form-control" ng-model="customer.work" placeholder="Beruf">
+                    <input type="number" class="form-control" ng-model="customer.income" placeholder="Einkommen">
+                    <input type="number" class="form-control" ng-model="customer.outcome" placeholder="Ausgaben">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                   <input class="form-control" id="floatingInput" placeholder="0,00" ng-model="data.assets.text"/>
+                   <label for="floatingInput">Text</label>
+                </div>
+                <div class="form-floating">
+                   <input class="form-control" id="floatingInput2" placeholder="0,00" ng-model="data.assets.amount"/>
+                   <label for="floatingInput2">Betrag</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="adddata1()"
+                        data-bs-dismiss="modal" aria-label="Close">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="./cards.css" crossorigin="anonymous">
+
+<style>
+    .form-search,
+    .form-search:focus-visible{
+        width: 100%;
+        background: transparent;
+        border:0;
+        box-shadow: none;
+        outline: none;
+        height: 100%;
+    }
+</style>
+
+<div class="container h-100">
+    <div class="row align-items-center h-100 equal">
+        <div class="col-8">
+            <form ng-submit="get()">
+                <div style="background: #ebebfa; padding: 8px; height: 56px; border-radius: 28px; display: flex;margin-bottom: 8px">
+                    <button class="btn fab round small"><span class="material-symbols-sharp">search</span></button>
+                    <input type="text"
+                           class="form-search"
+                           placeholder="Suche"
+                           ng-model="q"
+                           autocomplete="off"/>
+                    <button class="btn fab round small" ng-show="q" ng-click="q=null" type="reset"><span class="material-symbols-sharp">close</span></button>
+                    <button class="btn fab round small" type="submit"><span class="material-symbols-sharp">keyboard_return</span></button>
+                </div>
+            </form>
+
+            <table class="table hover">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="people in peoples"
+                    ng-click="selectPeoples(people)">
+                    <td>{{people.name}}, {{people.surname}} ({{people.birthday}})</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-4">
+            <a href="#" class="card" style="animation-delay: 0.12s">
+                <div class="card-content">
+                    <h1 class="card-title">
+                        Erstellen
+                        <span class="material-symbols-sharp" style="color: #6c5ce7">north_east</span>
+                    </h1>
+                    <div class="card-subtitle">
+                        Es wird ein neuer Fall auf
+                        <ul>
+                            <li>Person</li>
+                        </ul>
+                        eröffnen.
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

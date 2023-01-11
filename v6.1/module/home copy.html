@@ -1,0 +1,99 @@
+<style>
+    .form-search,
+    .form-search:focus-visible{
+        width: 100%;
+        background: transparent;
+        border:0;
+        box-shadow: none;
+        outline: none;
+        height: 100%;
+    }
+    .aniitm {
+        opacity: 1;
+    }
+    .aniitm.ng-enter {
+        -webkit-transition: 0.25s;
+        transition: 0.25s;
+        opacity: 0;
+    }
+    .aniitm.ng-enter-active {
+        opacity: 1;
+    }
+</style>
+<div class="container h-100 animation" style="padding-top: 16px">
+    <div class="row h100">
+        <div class="col-5 h100">
+
+            <form ng-submit="get()">
+                <div style="background: #e8f0fe; padding: 8px; height: 56px; border-radius: 28px; display: flex;margin-bottom: 8px">
+                    <button class="btn fab round small"><span class="material-symbols-sharp">search</span></button>
+                    <input type="text"
+                           class="form-search"
+                           placeholder="Suche"
+                           ng-model="q"
+                           autocomplete="off"/>
+                    <button class="btn fab round small" ng-show="q" ng-click="q=null" type="reset"><span class="material-symbols-sharp">close</span></button>
+                    <button class="btn fab round small" type="submit"><span class="material-symbols-sharp">keyboard_return</span></button>
+                </div>
+            </form>
+
+            <div style="border-radius: 12px;background: lavender;padding: 16px;margin-bottom: 8px"
+                 ng-show="peoples">
+                <b>Suche nach Kunde(n)</b>
+                <table class="table hover">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="people in peoples"
+                        ng-click="selectPeoples(people)">
+                        <td>{{people.name}}, {{people.surname}} ({{people.birthday}})</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <b>Neuen Fall eröffnen</b>
+                <div>
+                    {{master.peoples}}
+                </div>
+                <hr/>
+                <div>
+                    <button class="btn btn-primary" ng-click="postx(master.peoples[0].ID,master.peoples[0].surname+' '+master.peoples[0].name)">öffnen</button>
+                    <button class="btn btn-secondary" ng-click="peoples=null;getTasks()">verwerfen</button>
+                </div>
+            </div>
+
+            <div style="border-radius: 12px;background: lavender;padding: 16px;margin-bottom: 8px">
+                <b>Offene Aufgabe(n) ({{tasks.length}})</b>
+                <p ng-show="tasks.length == 0">{{content[lang][4]}}</p>
+                <table class="table hover" ng-show="tasks.length > 0">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col" width="100%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="task in tasks"
+                        ng-click="getData(task.FNR)"
+                        class="aniitm">
+                        <td>{{task.ID}}</td>
+                        <td>
+                            <span class="badge text-bg-secondary" ng-show="task.state==0">close</span>
+                            <span>{{task.name}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <a class="btn btn-primary" href="https://mysql.variomedia.de/?server=db33&pma_username=u53203&db=db53203" target="_blank">Data</a>
+            </div>
+        </div>
+
+        
+
+    </div>
+</div>

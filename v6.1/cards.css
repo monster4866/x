@@ -1,0 +1,100 @@
+.card,.nocard{
+    aspect-ratio: 1/1.4;
+    border-radius: 16px;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit !important;
+}
+.nocard{
+    cursor: default;
+    padding: 24px;
+}
+.card:hover > .card-content{
+    background-position: -10% 0;
+}
+.card:hover .material-symbols-sharp{
+    transform: rotate(180deg);
+    font-weight: 800;
+}
+.card:before{
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top:0;
+    width: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: .55s ease all;
+}
+.card:hover:before{
+    transition: .25s ease all; /* IE10+ and Future Browsers */
+    transform: scale(1.08,1.03);
+    background: var(--primary-color-90);
+    border-radius: 16px;
+    opacity: 1;
+}
+.card:active:before,
+.card:focus:before{
+    background: var(--primary-color-80);
+}
+.card-content{
+    background: radial-gradient(
+            rgba(0,0,0,0.2) 8%,
+            transparent 8%);
+    background-position: 0% 0%;
+    background-size: 5vmin 5vmin;
+    height: 100%;
+    width: 100%;
+    padding: 24px;
+    transition: background-position .35s ease;
+    position: relative;
+    z-index: 2;
+}
+.card:hover .animation-in{
+    display: none;
+}
+.card:hover .animation-in{
+    display: inline-block;
+}
+.animation-in {
+    -webkit-transition: .25s ease all; /* Safari/Chrome */
+    -moz-transition: .25s ease all; /* Firefox */
+    -o-transition: .25s ease all; /* Opera */
+    transition: .25s ease all; /* IE10+ and Future Browsers */
+    animation: 0.25s ease 0s 1 maininin;
+}
+@keyframes maininin {
+    0% {-webkit-transform: translateY(16px);opacity: 0}
+    100% {-webkit-transform: translateX(0);opacity:1}
+}
+
+.card-title{
+    margin-bottom: 32px;
+}
+.card-subtitle{
+    opacity: 0;
+    transition: .25s ease all;
+    -webkit-transform: translateY(32px);
+    font-size: 18px;
+    color: #5f6368;
+}
+.card:hover .card-subtitle{
+    opacity: 1;
+    -webkit-transform: translateY(0)
+}
+
+.card,.nocard{
+    animation: 0.25s ease 0s forwards 1 cardhoverin;
+    opacity: 0;
+    margin: 32px 0;
+}
+@keyframes cardhoverin {
+    0% {-webkit-transform: translateY(32px);opacity: 0}
+    100% {-webkit-transform: translateX(0);opacity:1}
+}
+.pulsestyle{
+    animation: pulse 2s infinite;
+}
