@@ -1,0 +1,60 @@
+<div class="container h-100 popin">
+    <div class="row align-items-center h-100">
+        <div class="col">
+
+            <div class="row">
+                <div class="col">
+                    id {{$route.current.params.id}}<br/>
+                    wealth
+                    <a href="" class="btn-bagdes" data-bs-toggle="modal" data-bs-target="#exampleModal">hinzufügen</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">input
+                    <div class="footer"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Weitere Vermögenswerte</h1>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">Girokonto</option>
+                            <option value="2">Tagesgeldkonto</option>
+                            <option value="2">Sparbrief</option>
+                            <option value="2">Versicherung</option>
+                            <option value="3">Depot</option>
+                            <option value="3">Immobilie</option>
+                        </select>
+                        <label for="floatingSelect">Works with selects</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="x" autocomplete="off">
+                        <label for="floatingInput">Betrag</label>
+                    </div>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput2" placeholder="x" autocomplete="off">
+                    <label for="floatingInput2">Notiz</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
