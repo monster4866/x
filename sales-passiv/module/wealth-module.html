@@ -1,0 +1,35 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" ng-model="slave.title">
+                            <option>Girokonto</option>
+                            <option>Tagesgeldkonto</option>
+                            <option>Sparbrief</option>
+                            <option>Versicherung</option>
+                            <option>Depot</option>
+                            <option>Immobilie</option>
+                        </select>
+                        <label for="floatingSelect">Art des Vermögens</label>
+                    </div>
+                </div>
+                <div ng-show="slave.title == 'Girokonto'">
+                    <input type="number" class="form-control" autocomplete="off" placeholder="Betrag" ng-model="slave.amount">
+                    <input type="text" class="form-control" autocomplete="off" placeholder="Notiz" ng-model="slave.text">
+                </div>
+                <div ng-show="wealthArt == 3">
+                    <input type="number" class="form-control" autocomplete="off" placeholder="Wert" ng-model="slave.amount">
+                    <input type="text" class="form-control" autocomplete="off" placeholder="Notiz" ng-model="slave.title">
+                </div>
+                {{slave}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn" ng-click="addWealth(slave)">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

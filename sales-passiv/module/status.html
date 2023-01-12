@@ -1,0 +1,73 @@
+<div class="container h-100 popin">
+    <div class="row align-items-center h-100">
+        <div class="col">
+
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-click="modalbox=true"
+                           data-bs-toggle="modal" data-bs-target="#exampleModalx"/>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col">
+                    <div ng-repeat="pl in master.plans"
+                         ng-if="pl.sub==0"
+                         style="background: var(--tertiary-color-95)">
+                        <div>
+                            <b>{{pl.title}}</b>
+                            <a href="" ng-click="editPlans($index)"
+                               data-bs-toggle="modal" data-bs-target="#exampleModalx">edit</a>
+                        </div>
+                        <div>{{pl.amount}}</div>
+                        <div>{{pl.text}}</div>
+                        <hr/>
+                    </div>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+
+            <hr/>
+            {{master.plans}}
+
+            <div class="row">
+                <div class="col">
+                    <hr/>
+                    <div>
+                        <div ng-repeat="acc in testaccounts">
+                            {{acc.title}},
+                            {{acc.amount | currency:"EUR":0}}
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="footer"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="addWealth"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <input class="form-control" ng-model="plans.title" placeholder="Ihre Ziele und Wünsche"/>
+                <input type="number" class="form-control" ng-model="plans.amount" placeholder="Betrag"/>
+                <textarea class="form-control mb-2 ng-valid ng-dirty ng-valid-parse ng-touched ng-empty" id="exampleFormControlTextarea1" rows="3" ng-model="plans.text" placeholder="Notiz"></textarea>
+
+                <input type="range" class="form-range" min="0" max="2" id="customRange2" value="0" ng-model="plans.sub">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn" ng-click="addPlans(plans)">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

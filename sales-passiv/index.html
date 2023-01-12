@@ -1,0 +1,381 @@
+<script>
+    const currentDateStart = new Date().getTime();
+</script>
+<!DOCTYPE html>
+<html lang="de" ng-app="app" ng-controller="AppController">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>project cherry v7.1 | Vermögensberatung</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/gobal.css" />
+
+    <style>
+        main{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: calc(100% - 72px);
+        }
+        nav{
+            display: inline-block;
+            width: 100%;
+            height: 72px;
+            transition: 0.35s ease-out;
+            backgroundx: #a29bfe;
+            padding: 8px;
+        }
+        nav-rail a {
+            margin-bottom: 4px;
+        }
+        nav .nav-btn2,
+        nav .nav-btn{
+            animation: 0.25s ease 0s 1 slideInFromTop;
+        }
+        nav .nav-btn2 a{
+            margin-left: 4px;
+        }
+        nav .nav-btn2 a:first-child{
+            margin: 0;
+        }
+        nav .nav-actions a {
+            animation: 0.25s ease 0s 1 slideZoom;
+            margin-right: 4px;
+        }
+
+        @keyframes slideZoom {
+            0% {-webkit-transform: scale(0);opacity: 1;}
+            75% {-webkit-transform: scale(1.05)}
+            100% {-webkit-transform: scale(1)}
+        }
+        @keyframes slideInFromTop {
+            0% {-webkit-transform: translateY(-8px);opacity: 0}
+            100% {-webkit-transform: translateY(0);opacity:1}
+        }
+        nav-rail a:first-child {
+            margin-top: 16px;
+            margin-bottom: 48px;
+        }
+        nav-bar{
+            background: var(--tertiary-color-95);
+            animation: 0.35s ease 0s 1 slideInFromBottom;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 8px 8px 8px;
+            z-index: 1000;
+        }
+
+        @keyframes slideInFromBottom {
+            0% {-webkit-transform: translateY(64px);opacity:0}
+            100% {-webkit-transform: translateX(0);opacity:1}
+        }
+        .item:hover{
+            background: var(--secondary-color-95);
+        }
+        .item.active{
+            background: var(--secondary-color-90);
+        }
+    </style>
+    <style>
+        .container-grid{
+            display: grid;
+            column-gap: 8px;
+            row-gap: 8px;
+            padding: 16px 0;
+        }
+        .card{
+            width: 100%;
+            min-height: 128px;
+            height: 35vh;
+        }
+        .container-grid h3.card-title{
+            font-size: 16px;
+        }
+        @media (max-width: 576px) {
+            .container-grid{grid-template-columns: 1fr}
+            .card{height: 160px;width: 100%}
+            .container-grid h3.card-title{font-size: 20px}
+            .container{overflow-x: hidden}
+            main{height: calc(100% - 80px);}
+        }
+        @media (min-width: 576px) {
+        }
+        @media (max-width: 768px) {
+            .container-grid{grid-template-columns: 1fr}
+        }
+        @media (min-width: 992px) {
+            .container-grid{grid-template-columns: 1fr 1fr 1fr}
+        }
+        @media (min-width: 1200px) {
+            .container-grid h3.card-title{font-size: 20px}
+        }
+    </style>
+</head>
+<body class="app-ready">
+
+<nav class="d-none d-sm-block">
+    <div class="nav-btn">
+        <a href="../"
+           class="btn fab fab-menu">
+            <span class="material-symbols-sharp">menu</span>
+        </a>
+
+        <div class="nav-btn2" style="display: inline-block;background: #f2f2f2;border-radius: 28px">
+            <a href="#!/home"
+               class="btn fab fab-menu"
+               ng-class="{'active': $location.split('/')[1] == 'home' }">
+                <span class="material-symbols-sharp">home</span>
+            </a>
+            <a ng-repeat="nav in navs"
+               ng-show="$route.current.params.id"
+               href="#!/id/{{$route.current.params.id}}/{{nav.href}}"
+               class="btn fab fab-menu"
+               ng-class="{'active': $location.split('/')[3] == nav.href }">
+                <span class="material-symbols-sharp">{{nav.title}}</span>
+            </a>
+        </div>
+
+        <div class="nav-actions" style="display: inline-block" ng-show="$route.current.params.id">
+            <a ng-repeat="acn in navActions"
+               ng-show="acn"
+               href=""
+               class="btn fab fab-menu"
+               data-bs-toggle="{{acn.modal}}"
+               data-bs-target="#exampleModal"
+               style="background: var(--secondary-color-40);color: #FFF">
+                <span class="material-symbols-sharp">{{acn.ico}}</span>
+                {{acn.title}}
+            </a>
+        </div>
+
+        <div style="line-height: 72px;display: none">
+            test
+        </div>
+    </div>
+</nav>
+
+<nav class="d-block d-sm-none">
+    <div class="nav-btn" style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
+        <a href="../"
+           class="btn fab fab-menu">
+            <span class="material-symbols-sharp">menu</span>
+        </a>
+        <a href="#!/home"
+           class="btn fab fab-menu"
+           ng-class="{'active': $location.split('/')[1] == 'home' }">
+            <span class="material-symbols-sharp">home</span>
+        </a>
+        <a ng-repeat="nav in navs"
+           ng-show="$route.current.params.id"
+           href="#!/id/{{$route.current.params.id}}/{{nav.href}}"
+           class="btn fab fab-menu"
+           ng-class="{'active': $location.split('/')[3] == nav.href }">
+            <span class="material-symbols-sharp">{{nav.title}}</span>
+        </a>
+    </div>
+</nav>
+
+<nav-action class="d-block d-sm-none">
+    <div class="nav-actions" style="position: fixed; right: 16px; bottom: 32px; z-index: 1000" ng-show="$route.current.params.id">
+        <a ng-repeat="acn in navActions"
+           ng-show="acn"
+           href=""
+           class="btn fab fab-menu"
+           data-bs-toggle="{{acn.modal}}"
+           data-bs-target="#exampleModal"
+           style="background: var(--secondary-color-40);color: #FFF">
+            <span class="material-symbols-sharp">{{acn.ico}}</span>
+            {{acn.title}}
+        </a>
+    </div>
+</nav-action>
+
+<main ng-view></main>
+
+</body>
+
+<!-- Bootstrap -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+
+<!-- AngularJS -->
+<script src="../js/angular.min.js"></script>
+<script src="../js/angular-route.min.js"></script>
+<script src="../js/angular-locale_de-de.min.js"></script>
+
+<script>
+    /* (c) Copyright Patrick Nolte 2014-2022 All Rights Reserved */
+
+    (function() {
+        'use strict';
+
+        const ng = angular.module('app', [
+            'ngRoute'
+        ]);
+
+        ng.config(['$routeProvider', '$locationProvider',function($routeProvider, $locationProvider) {
+            $routeProvider
+                .when('/home', {templateUrl: './module/home.html'})
+                .when('/home/new', {templateUrl: './module/home-new.html'})
+                .when('/home/tasks', {templateUrl: './module/home-tasks.html', controller: 'home-tasks'})
+                .when('/id/:id/status', {templateUrl: './module/status.html', controller: 'status'})
+                .when('/id/:id/select', {templateUrl: './module/select.html', controller: 'select'})
+                .when('/id/:id/offer', {templateUrl: './module/offer.html', controller: 'offer'})
+                .otherwise({redirectTo: '/home'});
+            $locationProvider.html5Mode(false);
+            $locationProvider.hashPrefix('!');
+        }])
+
+        ng.run(function ($rootScope, $location,$route) {
+            $rootScope.$on('$routeChangeSuccess', function () {
+                $rootScope.$location = $location.path();
+                $rootScope.$route = $route;
+            })
+            angular.element(document).ready(function () {
+                const currentDateEnd = new Date().getTime();
+                $rootScope.turbo = (currentDateEnd - currentDateStart)/1000;
+                $rootScope.$apply()
+            });
+        })
+
+        /* Controllers */
+        ng.controller('AppController', ['$scope','$rootScope', function($scope,$rootScope) {
+
+            /* MASTER */
+            $rootScope.master = {
+                plans: []
+            };
+
+            /* NAV */
+            $scope.navs = [
+                { title: "layers", href : "status", tooltip: "status"},
+                { title: "view_in_ar_new", href : "select", tooltip: "overview"},
+                { title: "join_right", href : "offer", tooltip: "offer"}
+            ]
+
+            $rootScope.navActions = [
+                {}
+            ]
+
+            $scope.testaccounts = [
+                { internal: true, typ : 200, title : "Girokonto", amount : 20000},
+                { internal: true, typ : 201, title : "Tagesgeldkonto", amount : 150000},
+                { internal: true, typ : 500, title : "Depot", data : [
+                        {internal: true, ISIN : "1", title : "Testfonds Galaktische Republik", stk: 100, price: 100.5, class:3, esg: true},
+                        {internal: true, ISIN : "2", title : "Testfonds Sith-Imperium", stk: 200, price: 175, class:2, esg: true},
+                        {ISIN : "2", title : "Nvidia", stk: 200, price: 25.90}
+                    ]},
+                { internal: true, typ : 300, title : "Sparbrief", amount : 50000}
+            ]
+
+            $scope.sumCalc = function (obj){
+                let x = 0;
+                obj.forEach(function (item){
+                    if (item.amount){
+                        x = x + Number(item.amount);
+                    }
+                    if(item.data){
+                        item.data.forEach(function (item2){
+                            x = x + Number(item2.stk * item2.price)
+                        })
+                    }
+                })
+                return x;
+            }
+
+            $scope.$watch("testaccounts", function() {
+                let x = 0;
+                let obj = $scope.testaccounts;
+                obj.forEach(function (item){
+                    if (item.amount2 && item.active){
+                        x = x + Number(item.amount2);
+                    }
+                    if(item.data){
+                        item.data.forEach(function (item2){
+                            if (item2.sell){
+                                x = x + Number(item2.stk * item2.price)
+                            }
+                        })
+                    }
+                })
+                $scope.amount2x = x;
+            }, true);
+
+            $scope.$watch("master.plans", function() {
+                let kft = 0;
+                $rootScope.master.plans.forEach(function (item){
+                    if (item.amount){
+                        kft = kft + Number(item.amount)
+                    }
+                })
+                $scope.kft = kft;
+            }, true);
+
+            $scope.addWealth = function (obj){
+                $scope.testaccounts.push(obj)
+            }
+        }])
+
+        ng.controller('home-tasks', ['$scope', function($scope) {
+
+            /* NAV */
+            $scope.tasks = [
+
+            ]
+
+        }])
+
+        ng.controller('status', ['$scope','$rootScope', function($scope,$rootScope) {
+            $rootScope.navActions = [
+                { ico: "add", title: "", modal: "modal"}
+            ]
+
+            $scope.addPlans = function (){
+                $rootScope.master.plans.push({
+                    title : $scope.plans.title,
+                    amount : $scope.plans.amount,
+                    text : $scope.plans.text,
+                    sub : $scope.plans.sub
+                })
+                $scope.plans = [];
+            }
+
+            $scope.editPlans = function (id){
+                $scope.plans = $rootScope.master.plans[id];
+                $rootScope.master.plans.splice(id, 1);
+            }
+        }])
+
+        ng.controller('select', ['$scope','$rootScope', function($scope,$rootScope) {
+            $rootScope.navActions = [
+                { ico: "fact_check", title: "WpHG"}
+            ]
+            $rootScope.risk = { class:2 , esg: true, date: '01.01.2023'}
+        }])
+
+        ng.controller('offer', ['$scope','$rootScope', function($scope,$rootScope) {
+            $rootScope.navActions = [
+
+            ]
+        }])
+
+        /* Directive */
+
+        ng.directive("addWealth", [function() {
+            return {
+                restrict: 'C',
+                templateUrl:
+                    './module/wealth-module.html'
+            };
+        }]).directive("footer", [function() {
+            return {
+                restrict: 'C',
+                template:
+                    '<p style="color: #5f6368">Designed and built @Patrick Nolte 2022-2023</p>'
+            };
+        }])
+    })();
+</script>
+</html>
