@@ -306,7 +306,7 @@
             $scope.$watch("master.plans", function() {
                 let kft = 0;
                 $rootScope.master.plans.forEach(function (item){
-                    if (item.amount){
+                    if (item.amount && item.sub == 0){
                         kft = kft + Number(item.amount)
                     }
                 })
@@ -346,13 +346,32 @@
                 $scope.plans = $rootScope.master.plans[id];
                 $rootScope.master.plans.splice(id, 1);
             }
+
+            const myModal = document.getElementById('exampleModalx')
+            const myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', () => {
+                myInput.focus()
+            })
         }])
 
-        ng.controller('select', ['$scope','$rootScope', function($scope,$rootScope) {
-            $rootScope.navActions = [
-                { ico: "fact_check", title: "WpHG"}
-            ]
-            $rootScope.risk = { class:2 , esg: true, date: '01.01.2023'}
+        ng.controller('select', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
+            $rootScope.navActions = []
+            $scope.sh = true;
+
+            $scope.getRisk = function (obj){
+
+                if(!obj) {
+                    $rootScope.risk = [];
+                }
+
+                $http.get(obj)
+                    .then(function(res){
+                        $rootScope.risk = res.data;
+                    });
+
+            }
+
         }])
 
         ng.controller('offer', ['$scope','$rootScope', function($scope,$rootScope) {
@@ -368,6 +387,19 @@
                 restrict: 'C',
                 templateUrl:
                     './module/wealth-module.html'
+            };
+        }]).directive("plansitem", [function() {
+            return {
+                restrict: 'C',
+                template:
+                    '<div style="background: var(--tertiary-color-95)">' +
+                    '<b>{{pl.title}}</b>' +
+                    '<a href="" ng-click="editPlans($index)"' +
+                    '   data-bs-toggle="modal" data-bs-target="#exampleModalx">edit</a>' +
+                    '<div>{{pl.amount}}</div>' +
+                    '<div>{{pl.text}}</div>' +
+                    '<hr/>' +
+                    '</div>'
             };
         }]).directive("footer", [function() {
             return {

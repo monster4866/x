@@ -2,15 +2,40 @@
     <div class="row align-items-center h-100">
         <div class="col">
 
-            Kurzfristig
             <div class="row">
                 <div class="col">
-                    <div ng-repeat="pl in master.plans">
-                        {{pl.title}}<br/>{{pl.amount}}
-                    </div>
+                    <div>{{amount2x | currency:"EUR":0}} | Vermögen für die Geldanlage</div>
+                    <hr/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>Mittel- bis Langfristig</div>
+                <p>{{amount2x - kft | currency:"EUR":0}}</p>
+
+                <div class="col">
+                    <ul>
+                        <li ng-repeat="pl in master.plans"
+                            ng-if="pl.sub > 0"><b>{{pl.title}}</b> {{pl.amount}}</li>
+                    </ul>
                 </div>
                 <div class="col">
-                    hier angebot
+                    <a href="../products">hinzufügen</a>
+                </div>
+            </div>
+            <hr/>
+
+            <div class="row">
+                <div>Kurzfristig</div>
+                <p>{{kft | currency:"EUR":0}}</p>
+                <div class="col">
+                    <ul>
+                        <li ng-repeat="pl in master.plans"
+                            ng-if="pl.sub == 0"><b>{{pl.title}}</b> {{pl.amount}}</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <a href="../products">hinzufügen</a>
                 </div>
             </div>
             <hr/>
