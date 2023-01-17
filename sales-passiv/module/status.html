@@ -39,9 +39,19 @@
                 <div class="col">
                     <hr/>
                     <div>
-                        <div ng-repeat="acc in testaccounts">
-                            {{acc.title}},
-                            {{acc.amount | currency:"EUR":0}}
+                        <div style="color: #5f6368">extern Wealth | {{master.wealth.extern | currency:"EUR":0}}</div>
+                        <p>Santander Wealth | {{master.wealth.santander | currency:"EUR":0}}</p>
+                        <div ng-repeat="account in accountData track by $index">
+                            <span class="text-bg-info" ng-hide="account.internal">extern</span>
+                            <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
+                            {{account.title}},
+                            {{account.amount | currency:"EUR":0}},
+                            {{account.text}},
+                            <span ng-show="account.realEstateAmount">{{account.realEstateAmount| currency:"EUR":0}},</span>
+                            <a href="" ng-hide="account.internal"
+                               data-bs-toggle="modal"
+                               data-bs-target="#exampleModal"
+                               ng-click="editWealth($index)">edit</a>
                         </div>
                     </div>
                     <hr/>

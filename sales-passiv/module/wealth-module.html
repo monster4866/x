@@ -4,31 +4,31 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="input-group mb-3">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" ng-model="slave.title">
-                            <option>Girokonto</option>
-                            <option>Tagesgeldkonto</option>
-                            <option>Sparbrief</option>
-                            <option>Versicherung</option>
-                            <option>Depot</option>
-                            <option>Immobilie</option>
-                        </select>
-                        <label for="floatingSelect">Art des Vermögens</label>
-                    </div>
+                    <select class="form-select" ng-model="slave.select">
+                        <option value="">---Please select---</option>
+                        <option ng-value="{typ:200,title:'Girokonto'}" ng-selected="selected == 200">Girokonto</option>
+                        <option ng-value="{typ:201,title:'Tagesgeldkonto'}" ng-selected="selected == 201">Tagesgeldkonto</option>
+                        <option ng-value="{typ:300,title:'Sparbrief'}" ng-selected="selected == 300">Sparbrief</option>
+                        <option ng-value="{typ:400,title:'Versicherung'}" ng-selected="selected == 400">Versicherung</option>
+                        <option ng-value="{typ:500,title:'Depot'}" ng-selected="selected == 500">Depot</option>
+                        <option ng-value="{typ:700,title:'Immobilie'}" ng-selected="selected == 700">Immobilie</option>
+                    </select>
                 </div>
-                <div ng-show="slave.title == 'Girokonto'">
-                    <input type="number" class="form-control" autocomplete="off" placeholder="Betrag" ng-model="slave.amount">
+                <div>
+                    <input type="number" class="form-control" autocomplete="off" placeholder="Betrag" ng-model="slave.amount"
+                           ng-hide="slave.select.typ == 700">
+                    <input type="number" class="form-control" autocomplete="off" placeholder="Wert der Immobilie" ng-model="slave.realEstateAmount"
+                           ng-show="slave.select.typ == 700">
+                    <input type="month" class="form-control" ng-model="slave.endDate"
+                           ng-show="slave.select.typ == 300 || slave.select.typ == 400"/>
                     <input type="text" class="form-control" autocomplete="off" placeholder="Notiz" ng-model="slave.text">
-                </div>
-                <div ng-show="wealthArt == 3">
-                    <input type="number" class="form-control" autocomplete="off" placeholder="Wert" ng-model="slave.amount">
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Notiz" ng-model="slave.title">
+
                 </div>
                 {{slave}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn" ng-click="addWealth(slave)">Save changes</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" ng-click="addWealth()">Save changes</button>
             </div>
         </div>
     </div>

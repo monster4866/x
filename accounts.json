@@ -1,0 +1,57 @@
+{
+  "1": [
+    {
+      "internal": true,
+      "typ" : 200,
+      "nr": 120001,
+      "startDate": "01.01.1980",
+      "title" : "Girokonto",
+      "amount" : 30000,
+      "rate": 0
+    },
+    {
+      "internal": true,
+      "typ" : 201,
+      "nr": 120101,
+      "startDate": "01.01.1995",
+      "title" : "Tagesgeldkonto",
+      "amount" : 150000,
+      "rate": 0
+    },
+    {
+      "internal": true,
+      "typ" : 500,
+      "nr": 150001,
+      "startDate": "01.01.2013",
+      "title" : "Depot"
+    },
+    {
+      "internal": true,
+      "typ" : 300,
+      "nr": 130001,
+      "title" : "Sparbrief",
+      "amount" : 50000,
+      "rate": 1.95,
+      "startDate": "01.01.2022",
+      "runningTime": 48
+    }
+  ],
+  "2": [
+    {
+      "internal": true,
+      "typ" : 201,
+      "nr": 220101,
+      "startDate": "01.01.1995",
+      "title" : "Tagesgeldkonto",
+      "amount" : 200000,
+      "rate": 0
+    },
+    {
+      "internal": true,
+      "typ" : 500,
+      "nr": 250001,
+      "startDate": "01.01.2013",
+      "title" : "Depot"
+    }
+  ]
+}

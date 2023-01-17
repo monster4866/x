@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>project cherry v7.1 | Vermögensberatung</title>
+    <title>project cherry v7.2 | Vermögensberatung</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
@@ -34,9 +34,10 @@
             animation: 0.25s ease 0s 1 slideInFromTop;
         }
         nav .nav-btn2 a{
-            margin-left: 4px;
+            margin-right: 4px;
         }
-        nav .nav-btn2 a:first-child{
+        nav .nav-btn2 a:first-child,
+        nav .nav-btn2 a:last-child{
             margin: 0;
         }
         nav .nav-actions a {
@@ -150,10 +151,6 @@
                 {{acn.title}}
             </a>
         </div>
-
-        <div style="line-height: 72px;display: none">
-            test
-        </div>
     </div>
 </nav>
 
@@ -232,6 +229,7 @@
             $rootScope.$on('$routeChangeSuccess', function () {
                 $rootScope.$location = $location.path();
                 $rootScope.$route = $route;
+                $rootScope.$ID = $route.current.params.id
             })
             angular.element(document).ready(function () {
                 const currentDateEnd = new Date().getTime();
@@ -241,12 +239,89 @@
         })
 
         /* Controllers */
-        ng.controller('AppController', ['$scope','$rootScope', function($scope,$rootScope) {
+        ng.controller('AppController', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
 
             /* MASTER */
             $rootScope.master = {
-                plans: []
+                plans: [],
+                wealth: {}
             };
+
+            /* Get Data form ID*/
+            $scope.$watch("$ID", function() {
+                if(!$rootScope.$ID && $scope.task){
+                    $scope.last$ID = $scope.task.ID;
+                    return
+                }
+                if($scope.last$ID == $rootScope.$ID) return;
+
+                $http.get("../tasks.json").then(function(res){
+                    $scope.task = res.data[$scope.$ID];
+                    $scope.task.ID = $scope.$ID;
+                    /* Get Customer Data */
+                    $http.get("../customers.json").then(function(res){
+                        $scope.customerData = res.data[$scope.task.customerId]});
+
+                    /* Get Account Data */
+                    $http.get("../accounts.json").then(function(res){
+                        $scope.accountData = res.data[$scope.task.customerId]
+
+                        /* Get Depot Data */
+                        $http.get("../depots.json").then(function(res){
+                            $scope.depotData = res.data;
+                            if(!$scope.accountData) return;
+                            $scope.accountData.forEach(function (item, index){
+                                if(item.typ === 500){
+                                    let sumDepotAmount=0;
+                                    $scope.accountData[index]["data"] = $scope.depotData[item.nr]
+                                    $scope.accountData[index].data.forEach(function (item){
+                                        sumDepotAmount += (item.stk * item.price)
+                                    })
+                                    $scope.accountData[index]["amount"] = sumDepotAmount
+                                }
+                            })
+                        });
+                    });
+                });
+
+            }, true);
+
+            $scope.$watch("accountData", function() {
+                if(!$scope.accountData) return;
+
+                /* Get Santander Wealth*/
+                var wealthSantander = $scope.accountData.filter(function (obj) {
+                    return obj.internal == true;
+                });
+                $rootScope.master.wealth.santander = wealthSantander.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
+
+                /* Get extern Wealth */
+                var rebels = $scope.accountData.filter(function (obj) {
+                    return !obj.internal;
+                });
+                $rootScope.master.wealth.extern = rebels.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
+
+                /* Get selectAmount */
+                var rebels1 = $scope.accountData.filter(function (obj) {
+                    return obj.active;
+                });
+                var rebels2 = $scope.accountData.filter(function (obj) {
+                    return obj.data;
+                });
+
+                let xx = 0;
+                rebels2.forEach(function (item){
+                    item.data.forEach(function (item, index){
+
+                        if(item.sell){
+                            xx = xx + item.selectAmount
+                        }
+                    })
+                })
+
+                $rootScope.master.wealth.selectAmount = rebels1.map(x => Number(x.amount)).reduce((x, y) => x + y, 0) + xx;
+
+            }, true);
 
             /* NAV */
             $scope.navs = [
@@ -259,50 +334,6 @@
                 {}
             ]
 
-            $scope.testaccounts = [
-                { internal: true, typ : 200, title : "Girokonto", amount : 20000},
-                { internal: true, typ : 201, title : "Tagesgeldkonto", amount : 150000},
-                { internal: true, typ : 500, title : "Depot", data : [
-                        {internal: true, ISIN : "1", title : "Testfonds Galaktische Republik", stk: 100, price: 100.5, class:3, esg: true},
-                        {internal: true, ISIN : "2", title : "Testfonds Sith-Imperium", stk: 200, price: 175, class:2, esg: true},
-                        {ISIN : "2", title : "Nvidia", stk: 200, price: 25.90}
-                    ]},
-                { internal: true, typ : 300, title : "Sparbrief", amount : 50000}
-            ]
-
-            $scope.sumCalc = function (obj){
-                let x = 0;
-                obj.forEach(function (item){
-                    if (item.amount){
-                        x = x + Number(item.amount);
-                    }
-                    if(item.data){
-                        item.data.forEach(function (item2){
-                            x = x + Number(item2.stk * item2.price)
-                        })
-                    }
-                })
-                return x;
-            }
-
-            $scope.$watch("testaccounts", function() {
-                let x = 0;
-                let obj = $scope.testaccounts;
-                obj.forEach(function (item){
-                    if (item.amount2 && item.active){
-                        x = x + Number(item.amount2);
-                    }
-                    if(item.data){
-                        item.data.forEach(function (item2){
-                            if (item2.sell){
-                                x = x + Number(item2.stk * item2.price)
-                            }
-                        })
-                    }
-                })
-                $scope.amount2x = x;
-            }, true);
-
             $scope.$watch("master.plans", function() {
                 let kft = 0;
                 $rootScope.master.plans.forEach(function (item){
@@ -313,17 +344,23 @@
                 $scope.kft = kft;
             }, true);
 
-            $scope.addWealth = function (obj){
-                $scope.testaccounts.push(obj)
-            }
         }])
 
-        ng.controller('home-tasks', ['$scope', function($scope) {
+        ng.controller('home-tasks', ['$scope','$http', function($scope, $http) {
 
-            /* NAV */
-            $scope.tasks = [
+            /* Get Tasks*/
+            $http.get("../tasks.json").then(function(res) {
+                $scope.tasks = res.data;
 
-            ]
+                /* Get Customer Data */
+                $http.get("../customers.json").then(function(res) {
+
+                    for (const [key, value] of Object.entries($scope.tasks)) {
+                        $scope.tasks[key].customerInfo = res.data[$scope.tasks[key].customerId];
+                    }
+
+                });
+            });
 
         }])
 
@@ -331,6 +368,9 @@
             $rootScope.navActions = [
                 { ico: "add", title: "", modal: "modal"}
             ]
+            $scope.selectKindWealth = [
+                {typ:200, title:'Girokonto'}
+            ];
 
             $scope.addPlans = function (){
                 $rootScope.master.plans.push({
@@ -353,6 +393,21 @@
             myModal.addEventListener('shown.bs.modal', () => {
                 myInput.focus()
             })
+
+            $scope.addWealth = function (){
+                $scope.slave['typ'] = $scope.slave.select.typ;
+                $scope.slave['title'] = $scope.slave.select.title;
+                delete $scope.slave.select;
+                $scope.accountData.push($scope.slave)
+                delete $scope.slave;
+                delete $scope.selected;
+            }
+            $scope.editWealth = function (id){
+                $scope.slave = $scope.accountData[id];
+                $scope.slave.select = {typ: $scope.accountData[id].typ, title: $scope.accountData[id].title}
+                $scope.selected = $scope.accountData[id].typ;
+                $scope.accountData.splice(id, 1);
+            }
         }])
 
         ng.controller('select', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {

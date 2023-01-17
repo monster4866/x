@@ -43,44 +43,44 @@
             </div>
             <div class="row" ng-show="risk.valid">
                <div class="col">
-                   <div style="color: #999">{{sumCalc(testaccounts) | currency:"EUR":0}} | Gesamtvermögen</div>
-                   <h4 ng-show="amount2x>0">{{amount2x | currency:"EUR":0}} | Vermögen für die Geldanlage</h4>
+                   <div style="color: #999">{{master.wealth.santander + master.wealth.extern | currency:"EUR":0}} | Gesamtvermögen</div>
+                   <h4 ng-show="master.wealth.selectAmount>0">{{master.wealth.selectAmount | currency:"EUR":0}} | Vermögen für die Geldanlage</h4>
                    <hr/>
                </div>
             </div>
-            <div ng-repeat="acc in testaccounts" ng-show="risk.valid">
+            <div ng-repeat="account in accountData track by $index" ng-show="risk.valid">
                 <div class="item"
-                     ng-class="{'active': testaccounts[$index].active == true }">
+                     ng-class="{'active': accountData[$index].active == true }">
                     <input class="form-check-input" type="checkbox"
-                           ng-model="testaccounts[$index].active"
-                           ng-click="testaccounts[$index].amount2 = acc.amount"
-                           ng-if="acc.amount">
-                    <a href="" ng-hide="acc.internal">edit</a>
-                    {{acc.title}},
-                    {{acc.amount | currency:"EUR":0}}
-                    <span ng-show="acc.internal">(Intern)</span>
-                    <span ng-show="acc.typ == 300" class="text-danger">feste Geldanlage</span>
-                    <input type="number" class="form-control" value="{{acc.amount}}" ng-show="acc.active" ng-model="testaccounts[$index].amount2"/>
+                           ng-model="accountData[$index].active"
+                           ng-click="accountData[$index].selectAmount = account.amount"
+                           ng-if="account.typ !== 500">
+                    <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
+                    <span class="text-bg-info" ng-hide="account.internal">extern</span>
+                    {{account.title}},
+                    {{account.amount | currency:"EUR":0}}
+                    <input type="number" class="form-control" value="{{account.amount}}" ng-show="account.active" ng-model="accountData[$index].selectAmount"/>
                 </div>
-                <div ng-repeat="depot in acc.data" class="item"
+                <div ng-repeat="depot in account.data" class="item"
                      ng-class="{'active': depot.sell == true }">
+
                     <input class="form-check-input" type="checkbox"
-                            ng-model="depot.sell">
+                           ng-model="depot.sell"
+                           ng-change="depot.selectAmount = (depot.stk * depot.price)"
+                           style="margin-left: 16px">
+
+                    <div ng-show="depot.internal" style="display: inline-block">
+                        <span class="text-bg-success" ng-show="risk.class >= depot.class">Halten</span>
+                        <span class="text-bg-danger" ng-show="risk.class < depot.class">Verkaufen</span>
+                    </div>
+
                     {{depot.title}},
                     {{depot.stk * depot.price | currency:"EUR":0}},
-                    <div ng-show="depot.internal" style="display: inline-block">
-                        Class: {{depot.class}},
-                        <span ng-show="risk.class >= depot.class">Halten</span>
-                        <span class="text-danger" ng-show="risk.class < depot.class">
-                            <span class="material-symbols-sharp">emergency_home</span>
-                            Verkaufen
-                        </span>
-                    </div>
-                    <input type="number" class="form-control" value="{{depot.stk * depot.price}}" ng-show="depot.sell" ng-model="depot.sellAmount"/>
+                    <input type="number" class="form-control" ng-if="depot.sell" ng-model="depot.selectAmount"/>
                 </div>
-                <hr/>
             </div>
-            {{testaccounts}}
+            <hr/>
+            <hr/>
             <div class="footer"></div>
         </div>
     </div>

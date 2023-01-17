@@ -1,0 +1,12 @@
+{
+  "150001" : [
+    {"internal": true, "ISIN" : "1", "title" : "Testfonds Galaktische Republik", "stk": 100, "price": 100.5, "class":3, "esg": true},
+    {"internal": true, "ISIN" : "2", "title" : "Testfonds Sith-Imperium", "stk": 200, "price": 175, "class":2, "esg": true},
+    {"ISIN" : "2", "title" : "Nvidia", "stk": 200, "price": 25.90}
+  ],
+  "250001" : [
+    {"internal": true, "ISIN" : "1", "title" : "Testfonds Galaktische Republik", "stk": 100, "price": 100.5, "class":3, "esg": true},
+    {"internal": true, "ISIN" : "2", "title" : "Testfonds Sith-Imperium", "stk": 200, "price": 175, "class":3, "esg": true},
+    {"ISIN" : "2", "title" : "Nvidia", "stk": 200, "price": 25.90}
+  ]
+}

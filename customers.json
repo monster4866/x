@@ -1,0 +1,17 @@
+{
+  "1": {
+    "name": "Skywalker",
+    "surname": "Luke",
+    "birth" : "01.01.1969"
+  },
+  "2": {
+    "name": "Miyamoto",
+    "surname": "Shigeru",
+    "birth" : "16.11.1952"
+  },
+  "3": {
+    "name": "Zimmer",
+    "surname": "Berndt",
+    "birth" : "01.01.1980"
+  }
+}
