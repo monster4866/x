@@ -1,0 +1,518 @@
+{
+  "insurance" :[],
+  "svv" : [
+    {
+      "title" : "SVV Einkommen",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 0,
+      "esg" : [false,null,null,{}],
+      "ID" : "SVVEK",
+      "horizont" : "min 5 Jahre",
+      "performance" : [{
+        "2022" : -0.1580,
+        "2021" : 0.0940,
+        "2020" : 0.0060,
+        "2019" : 0.1170
+      }]
+    },
+    {
+      "title" : "SVV Stabilität",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 0,
+      "esg" : [false,null,null,{}],
+      "ID" : "SVVST",
+      "horizont" : "min 3 Jahre",
+      "performance" : [{
+        "2022" : -0.1190,
+        "2021" : 0.0320,
+        "2020" : 0.0250,
+        "2019" : 0.0280
+      }]
+    },
+    {
+      "title" : "SVV Balance",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 0,
+      "esg" : [false,null,null,{}],
+      "ID" : "SVVBL",
+      "horizont" : "min 5 Jahre",
+      "performance" : [{
+        "2022" : -0.1180,
+        "2021" : 0.1210,
+        "2020" : 0.0350,
+        "2019" : 0.0570
+      }]
+    },
+    {
+      "title" : "SVV Chance",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 0,
+      "esg" : [false,null,null,{}],
+      "ID" : "SVVCH",
+      "horizont" : "min 5 Jahre",
+      "performance" : [{
+        "2022" : -0.1250,
+        "2021" : 0.2460,
+        "2020" : 0.0340,
+        "2019" : 0.0970
+      }]
+    }
+  ],
+  "fonds" : [
+    {
+      "title" : "Fidelity Germany Fund A",
+      "type" : "Aktien",
+      "region" : "Deutschland",
+      "risk" : 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU0048580004",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.2525,
+        "2021" : 0.1203,
+        "2020" : -0.0114,
+        "2019" : 0.3108
+      }]
+    },
+    {
+      "title" : "Santander European Dividend AD",
+      "type" : "Aktien",
+      "region" : "Europa",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0952333507",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1162,
+        "2021" : 0.1649,
+        "2020" : -0.1297,
+        "2019" : 0.1887
+      }]
+    },
+    {
+      "title" : "Santander Euro Equity A",
+      "type" : "Aktien",
+      "region" : "Europa",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0341648862",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.2158,
+        "2021" : 0.2220,
+        "2020" : -0.0521,
+        "2019" : 0.1949
+      }]
+
+    },
+    {
+      "title" : "Threadneedle (Lux) PAN European Smaller Companies 1E",
+      "type" : "Aktien",
+      "region" : "Europa",
+      "risk" : 4,
+      "esg" : [true,null,null,{}],
+      "ISIN" : "LU1829329819",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.3919,
+        "2021" : 0.1991,
+        "2020" : 0.0896,
+        "2019" : 0.3647
+      }]
+    },
+    {
+      "title" : "DWS Top Dividene LD",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0.15,{}],
+      "ISIN" : "DE0009848119",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.0049,
+        "2021" : 0.2216,
+        "2020" : -0.0951,
+        "2019" : 0.2039
+      }]
+    },
+    {
+      "title" : "Wellington Global Quality Growth D",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,null,null,{}],
+      "ISIN" : "LU1366139522",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1661,
+        "2021" : 0.2552,
+        "2020" : 0.1141,
+        "2019" : 0.3265
+      }]
+    },
+    {
+      "title" : "Fidelity Global Technology Fund A",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0.05,{}],
+      "ISIN" : "LU0099574567",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1256,
+        "2021" : 0.3152,
+        "2020" : 0.3225,
+        "2019" : 0.4651
+      }]
+    },
+    {
+      "title" : "Morgan Stanley Global Brands A",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0.1,{}],
+      "ISIN" : "LU0119620416",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1099,
+        "2021" : 0.3136,
+        "2020" : 0.0234,
+        "2019" : 0.3082
+      }]
+    },
+    {
+      "title" : "Santander GO Gobal Equity ESG AE",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU2134693808",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1125,
+        "2021" : 0.3580,
+        "2020" : 0.3088,
+        "2019" : 0
+      }]
+    },
+    {
+      "title" : "Nordea 1 - Gobal Climate and Envionment",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0.02,0.85,{}],
+      "ISIN" : "LU0348926287",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1429,
+        "2021" : 0.3356,
+        "2020" : 0.1979,
+        "2019" : 0.3806
+      }]
+    },
+    {
+      "title" : "M&G (Lux) Gobal Listed Infrastructure A",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0.51,{}],
+      "ISIN" : "LU1665237613",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.0305,
+        "2021" : 0.2230,
+        "2020" : -0.0630,
+        "2019" : 0.3670
+      }]
+    },
+    {
+      "title" : "BlackRock World Mining A4",
+      "type" : "Aktien",
+      "region" : "Welt",
+      "risk" : 4,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU0408222593",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.307,
+        "2021" : 0.2547,
+        "2020" : 0.2184,
+        "2019" : 0.2176
+      }]
+    },
+    {
+      "title" : "Santander GO North American Equity C",
+      "type" : "Aktien",
+      "region" : "Nordamerika/USA",
+      "risk": 4,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1942727402",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.5065,
+        "2021" : -0.0387,
+        "2020" : 0.7086,
+        "2019" : 0.0510
+      }]
+    },
+    {
+      "title" : "Robeco Emerging Conservative Equities B",
+      "type" : "Aktien",
+      "region" : "Schwellenländer",
+      "risk" : 3,
+      "esg" : [true,0,0.5,{}],
+      "ISIN" : "LU0582532197",
+      "horizont" : "über 7 Jahre",
+      "performance" : [{
+        "2022" : -0.0620,
+        "2021" : 0.1886,
+        "2020" : -0.1284,
+        "2019" : 0.1667
+      }]
+    },
+    {
+      "title" : "Santander Euro Corporate Bond AD",
+      "type" : "Renten",
+      "region" : "Europa",
+      "risk" : 2,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU1003778534",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1494,
+        "2021" : -0.0194,
+        "2020" : 0.0174,
+        "2019" : 0.0547
+      }]
+    },
+    {
+      "title" : "Carmignac Securite AW EUR Acc",
+      "type" : "Renten",
+      "region" : "Europa",
+      "risk" : 2,
+      "esg" : [true,null,null,{}],
+      "ISIN" : "FR0010149120",
+      "horizont" : "bis 3 Jahre",
+      "performance" : [{
+        "2022" : -0.0709,
+        "2021" : 0.0018,
+        "2020" : 0.0218,
+        "2019" : 0.0358
+      }]
+    },
+    {
+      "title" : "Flossback von Storch Bond Opportunities R",
+      "type" : "Renten",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0399027613",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1117,
+        "2021" : -0.0241,
+        "2020" : 0.0895,
+        "2019" : 0.1175
+      }]
+    },
+    {
+      "title" : "Jupiter Dynamic Bond L EUR Q",
+      "type" : "Renten",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU0992000496",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1696,
+        "2021" : -0.0112,
+        "2020" : 0.0562,
+        "2019" : 0.0647
+      }]
+    },
+    {
+      "title" : "Santander Select Income AD",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk": 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1590077316",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1345,
+        "2021" : 0.0497,
+        "2020" : -0.0084,
+        "2019" : 0.0924
+      }]
+    },
+    {
+      "title" : "Santander GO Absolute Return A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk": 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1917959469",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.0712,
+        "2021" : 0.0001,
+        "2020" : 0.0499,
+        "2019" : 0.0513
+      }]
+    },
+    {
+      "title" : "Santander Select Defensive A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781563332",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1137,
+        "2021" : 0.0092,
+        "2020" : 0.0153,
+        "2019" : 0.0605
+      }]
+    },
+    {
+      "title" : "Santander Select Moderate A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781563928",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1322,
+        "2021" : 0.0636,
+        "2020" : -0.0203,
+        "2019" : 0.0972
+      }]
+    },
+    {
+      "title" : "Santander Select Dynamic A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781564579",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1632,
+        "2021" : 0.1487,
+        "2020" : -0.0415,
+        "2019" : 0.1521
+      }]
+    },
+    {
+      "title" : "Santander Future Wealth AE",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU2250435158",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.2098,
+        "2021" : 0.0951,
+        "2020" : 0,
+        "2019" : 0
+      }]
+    },
+    {
+      "title" : "Flossbach von Storch Multiple Oppertunities II R",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk": 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0952573482",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1266,
+        "2021" : 0.1123,
+        "2020" : 0.0376,
+        "2019" : 0.2002
+      }]
+    },
+    {
+      "title" : "M&G (Lux) Optimal Income A Acc",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [true,null,null,{}],
+      "ISIN" : "LU1670724373",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1554,
+        "2021" : 0.0117,
+        "2020" : 0.0144,
+        "2019" : 0.0681
+      }]
+    },
+    {
+      "title" : "M&G (Lux) Optimal Income A Dis",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk": 2,
+      "esg" : [true,null,null,{}],
+      "ISIN" : "LU1670724456",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1554,
+        "2021" : 0.0118,
+        "2020" : 0.0143,
+        "2019" : 0.0674
+      }]
+    },
+    {
+      "title" : "Vermögensaufbaufonds Konservativ A",
+      "type" : "Multi-Asset ETF",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1983372183",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1169,
+        "2021" : 0.0281,
+        "2020" : 0.0349,
+        "2019" : 0.0234
+      }]
+    },
+    {
+      "title" : "Vermögensaufbaufonds Ausgewogen A",
+      "type" : "Multi-Asset ETF",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1983372423",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1223,
+        "2021" : 0.1063,
+        "2020" : 0.0419,
+        "2019" : 0.0494
+      }]
+    },
+    {
+      "title" : "Vermögensaufbaufonds Zuwachs A",
+      "type" : "Multi-Asset ETF",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1983372423",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1269,
+        "2021" : 0.1795,
+        "2020" : 0.0394,
+        "2019" : 0.0627
+      }]
+    }
+  ]
+}

@@ -220,6 +220,7 @@
                 .when('/id/:id/status', {templateUrl: './module/status.html', controller: 'status'})
                 .when('/id/:id/select', {templateUrl: './module/select.html', controller: 'select'})
                 .when('/id/:id/offer', {templateUrl: './module/offer.html', controller: 'offer'})
+                .when('/id/:id/offer/products', {templateUrl: './module/products.html', controller: 'products'})
                 .otherwise({redirectTo: '/home'});
             $locationProvider.html5Mode(false);
             $locationProvider.hashPrefix('!');
@@ -291,7 +292,7 @@
 
                 /* Get Santander Wealth*/
                 var wealthSantander = $scope.accountData.filter(function (obj) {
-                    return obj.internal == true;
+                    return obj.internal === true;
                 });
                 $rootScope.master.wealth.santander = wealthSantander.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
 
@@ -433,6 +434,23 @@
             $rootScope.navActions = [
 
             ]
+        }])
+
+        ng.controller('products', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
+
+            $http.get('../fonds.json')
+                .then(function(res){
+                    $rootScope.products = res.data;
+                });
+
+            $scope.addProduct = function (obj){
+                if(!$rootScope.productsSelect){
+                    $rootScope.productsSelect = [];
+                }
+                $rootScope.productsSelect.push({
+                    'title':obj
+                })
+            }
         }])
 
         /* Directive */

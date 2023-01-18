@@ -1,0 +1,17 @@
+<div class="container h-100 popin">
+    <div class="row align-items-center h-100">
+        <div class="col">
+            <p>Products</p>
+
+            <div ng-repeat="product in products">
+                ({{product.risk}}) {{product.title}}
+                <a href="#!/id/{{$ID}}/offer"
+            ng-click="addProduct(product.title)">add</a>
+                <a href="../products/#!/id/{{product.ISIN}}" target="_blank">details</a>
+            </div>
+
+            <hr/>
+            {{products}}
+        </div>
+    </div>
+</div>

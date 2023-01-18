@@ -1,0 +1,77 @@
+[
+    {
+      "title" : "Santander Select Income AD",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk": 3,
+      "esg" : [false,null,null,{}],
+      "ISIN" : "LU1590077316",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1345,
+        "2021" : 0.0497,
+        "2020" : -0.0084,
+        "2019" : 0.0924
+      }]
+    },
+    {
+      "title" : "Santander Select Defensive A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 2,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781563332",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1137,
+        "2021" : 0.0092,
+        "2020" : 0.0153,
+        "2019" : 0.0605
+      }]
+    },
+    {
+      "title" : "Santander Select Moderate A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781563928",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1322,
+        "2021" : 0.0636,
+        "2020" : -0.0203,
+        "2019" : 0.0972
+      }]
+    },
+    {
+      "title" : "Santander Select Dynamic A",
+      "type" : "Multi-Asset",
+      "region" : "Welt",
+      "risk" : 3,
+      "esg" : [true,0,0,{}],
+      "ISIN" : "LU0781564579",
+      "horizont" : "bis 7 Jahre",
+      "performance" : [{
+        "2022" : -0.1632,
+        "2021" : 0.1487,
+        "2020" : -0.0415,
+        "2019" : 0.1521
+      }]
+    },
+  {
+    "title" : "Trapper Keeper Ultra Keeper Futura S 2000 Fonds",
+    "type" : "Multi-Asset",
+    "region" : "Welt",
+    "risk" : 3,
+    "esg" : [true,0,0,{}],
+    "ISIN" : "X1",
+    "horizont" : "bis 7 Jahre",
+    "performance" : [{
+      "2022" : 0.1,
+      "2021" : 0.1,
+      "2020" : 0.1,
+      "2019" : 0.1
+    }]
+  }
+  ]

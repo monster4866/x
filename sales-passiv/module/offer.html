@@ -4,14 +4,14 @@
 
             <div class="row">
                 <div class="col">
-                    <div>{{amount2x | currency:"EUR":0}} | Vermögen für die Geldanlage</div>
+                    <div>{{master.wealth.selectAmount | currency:"EUR":0}} | Vermögen für die Geldanlage</div>
                     <hr/>
                 </div>
             </div>
 
             <div class="row">
                 <div>Mittel- bis Langfristig</div>
-                <p>{{amount2x - kft | currency:"EUR":0}}</p>
+                <p>{{master.wealth.selectAmount - kft | currency:"EUR":0}}</p>
 
                 <div class="col">
                     <ul>
@@ -20,7 +20,11 @@
                     </ul>
                 </div>
                 <div class="col">
-                    <a href="../products">hinzufügen</a>
+                    <a href="#!/id/{{$ID}}/offer/products">hinzufügen</a>
+                    <div ng-repeat="product in productsSelect">
+                        {{product.title}}
+                        <input class="form-control" ng-model="product.amount"/>
+                    </div>
                 </div>
             </div>
             <hr/>
@@ -35,7 +39,6 @@
                     </ul>
                 </div>
                 <div class="col">
-                    <a href="../products">hinzufügen</a>
                 </div>
             </div>
             <hr/>
