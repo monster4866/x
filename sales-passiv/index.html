@@ -297,7 +297,7 @@
 
                 /* Get extern Wealth */
                 var rebels = $scope.accountData.filter(function (obj) {
-                    return !obj.internal;
+                    return !obj.internal && !obj.realEstateAmount;
                 });
                 $rootScope.master.wealth.extern = rebels.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
 
@@ -319,7 +319,7 @@
                     })
                 })
 
-                $rootScope.master.wealth.selectAmount = rebels1.map(x => Number(x.amount)).reduce((x, y) => x + y, 0) + xx;
+                $rootScope.master.wealth.selectAmount = rebels1.map(x => Number(x.selectAmount)).reduce((x, y) => x + y, 0) + xx;
 
             }, true);
 

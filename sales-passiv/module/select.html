@@ -54,12 +54,22 @@
                     <input class="form-check-input" type="checkbox"
                            ng-model="accountData[$index].active"
                            ng-click="accountData[$index].selectAmount = account.amount"
-                           ng-if="account.typ !== 500">
+                           ng-if="account.typ < 500">
                     <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
                     <span class="text-bg-info" ng-hide="account.internal">extern</span>
                     {{account.title}},
-                    {{account.amount | currency:"EUR":0}}
-                    <input type="number" class="form-control" value="{{account.amount}}" ng-show="account.active" ng-model="accountData[$index].selectAmount"/>
+                    {{account.amount | currency:"EUR":0}},
+                    {{account.text}},
+                    <span ng-if="!account.internal">
+                        <span ng-if="account.typ == 500">
+                        <a href="../docs" target="_blank">Depotübernahme</a>
+                    </span>
+                    <span ng-if="account.typ < 300">
+                        <a href="../docs" target="_blank">Kontoübernahme</a>
+                        <a href="../docs" target="_blank">Überweisungsauftrag</a>
+                    </span>
+                    </span>
+                    <input type="number" class="form-control" ng-show="account.active" ng-model="accountData[$index].selectAmount"/>
                 </div>
                 <div ng-repeat="depot in account.data" class="item"
                      ng-class="{'active': depot.sell == true }">
