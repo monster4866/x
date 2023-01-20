@@ -21,9 +21,19 @@
                 </div>
                 <div class="col">
                     <a href="#!/id/{{$ID}}/offer/products">hinzufügen</a>
+                    <hr/>
                     <div ng-repeat="product in productsSelect">
-                        {{product.title}}
+                        {{product.title}},
+                        <a href="">delete</a>,
+                        <a href="../products/#!/id/{{product.ISIN}}" target="_blank">details</a>
+                        <div style="background: var(--primary-color-95)">hier eine Kurzbeschreibung, lalala</div>
                         <input class="form-control" ng-model="product.amount"/>
+                        4 Jahres Performance:
+                        {{performance4(product.amount,product.performance[0]) | currency:"EUR":0}}
+                        {{ (performance4(product.amount / product.amount,product.performance[0])*100 - 100).toFixed(1)}}%
+                        <br/>
+                        {{product.performance[0]}}
+                        <hr/>
                     </div>
                 </div>
             </div>
@@ -42,7 +52,7 @@
                 </div>
             </div>
             <hr/>
-
+            {{productsSelect}}
 
         </div>
     </div>

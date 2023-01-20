@@ -74,10 +74,10 @@
             100% {-webkit-transform: translateX(0);opacity:1}
         }
         .item:hover{
-            background: var(--secondary-color-95);
+            background: var(--tertiary-color-95);
         }
         .item.active{
-            background: var(--secondary-color-90);
+            background: var(--tertiary-color-90);
         }
     </style>
     <style>
@@ -179,7 +179,7 @@
     <div class="nav-actions" style="position: fixed; right: 16px; bottom: 32px; z-index: 1000" ng-show="$route.current.params.id">
         <a ng-repeat="acn in navActions"
            ng-show="acn"
-           href=""
+           href="{{acn.href}}"
            class="btn fab fab-menu"
            data-bs-toggle="{{acn.modal}}"
            data-bs-target="#exampleModal"
@@ -343,6 +343,8 @@
                     }
                 })
                 $scope.kft = kft;
+
+                $rootScope.master.wealth.plans = $rootScope.master.plans.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
             }, true);
 
         }])
@@ -372,6 +374,7 @@
             $scope.selectKindWealth = [
                 {typ:200, title:'Girokonto'}
             ];
+            $scope.plansText = ['Kurzfristig','Mittelfristig','Langfristig']
 
             $scope.addPlans = function (){
                 $rootScope.master.plans.push({
@@ -432,24 +435,35 @@
 
         ng.controller('offer', ['$scope','$rootScope', function($scope,$rootScope) {
             $rootScope.navActions = [
-
+                { ico: "print", title: "", modal: "modal", href:"javascript:print()"}
             ]
+
+            $scope.performance4 = function (a,p){
+                let x = Number(a);
+
+                for (const [key, value] of Object.entries(p)) {
+                    if(typeof value == 'number'){
+                        x = x + (x*value)
+                    }
+                }
+                return (x);
+            }
         }])
 
         ng.controller('products', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
-
             $http.get('../fonds.json')
                 .then(function(res){
-                    $rootScope.products = res.data;
+                    if(!$scope.risk) return;
+                    $rootScope.products = res.data.filter(function (obj) {
+                        return obj.risk <= $scope.risk.class;
+                    });
                 });
 
             $scope.addProduct = function (obj){
                 if(!$rootScope.productsSelect){
                     $rootScope.productsSelect = [];
                 }
-                $rootScope.productsSelect.push({
-                    'title':obj
-                })
+                $rootScope.productsSelect.push(obj)
             }
         }])
 
