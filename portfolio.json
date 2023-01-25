@@ -1,8 +1,17 @@
 {
-  "777" : {
-    "customerId": 1
+  "2" : {
+    "title": "Konservativ",
+    "sec" : 0.7,
+    "ren" : 0.3
   },
-  "778" : {
-    "customerId": 2
+  "3" : {
+    "title": "Risikobewusst",
+    "sec" : 0.4,
+    "ren" : 0.6
+  },
+  "4" : {
+    "title": "Spekulativ",
+    "sec" : 0.3,
+    "ren" : 0.7
   }
 }

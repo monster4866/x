@@ -296,6 +296,19 @@
                 });
                 $rootScope.master.wealth.santander = wealthSantander.map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
 
+                /* Get Liqui */
+                $rootScope.master.wealth.liqui = $scope.accountData.filter(function (obj) {
+                    return obj.typ < 300 || obj.active;
+                }).map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
+
+                $rootScope.master.wealth.sec = $scope.accountData.filter(function (obj) {
+                    return obj.typ > 299 && obj.typ < 401 && !obj.active;
+                }).map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
+
+                $rootScope.master.wealth.ren = $scope.accountData.filter(function (obj) {
+                    return obj.typ === 500 && !obj.active;
+                }).map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
+
                 /* Get extern Wealth */
                 var rebels = $scope.accountData.filter(function (obj) {
                     return !obj.internal && !obj.realEstateAmount;
@@ -427,6 +440,12 @@
                 $http.get(obj)
                     .then(function(res){
                         $rootScope.risk = res.data;
+
+                        $http.get("../portfolio.json")
+                            .then(function(res){
+                                $rootScope.portfolio = res.data[$rootScope.risk.class];
+
+                            });
                     });
 
             }
