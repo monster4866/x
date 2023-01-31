@@ -134,9 +134,11 @@
             background: var(--tertiary-color-95);
             border-radius: 12px;
             display: inline-grid;
+            transition: .25s ease all; /* IE10+ and Future Browsers */
         }
         .plansitem:hover{
             background: var(--tertiary-color-90);
+            transform: scale(1.02) !important;
             cursor: pointer;
         }
         .plansitem .sub{
@@ -436,13 +438,34 @@
             $scope.plans.eventSlide = 0;
 
             $scope.addPlans = function (){
+                if(!$scope.plans.event){
+                    $scope.plans.event = new Date();
+                }
+
+                const nowDate =  new Date();
+                const monthDiff = $scope.plans.event.getMonth() - nowDate.getMonth() +
+                (12 * ($scope.plans.event.getFullYear() - nowDate.getFullYear()))
+                switch (true) {
+                    case (monthDiff < 37):
+                        $scope.plans.sub = 0;
+                        break;
+                    case (monthDiff < 61):
+                        $scope.plans.sub = 1;
+                        break;
+                    default:
+                        $scope.plans.sub = 2;
+                }
+
                 $rootScope.master.plans.push({
                     title : $scope.plans.title,
                     amount : $scope.plans.amount,
                     text : $scope.plans.text,
-                    sub : $scope.plans.sub
+                    sub : $scope.plans.sub,
+                    event: $scope.plans.event,
+                    eventSub: 0
                 })
                 $scope.plans = [];
+                $scope.plans.eventSlide = 0;
             }
 
             $scope.editPlans = function (id){
@@ -579,7 +602,7 @@
                 template:
                     '<div style="padding: 8px 16px" ng-click="editPlans($index)">' +
                         '<div style="float: right">' +
-                            '<span>({{plansText[pl.sub]}})</span>' +
+                            '<span>{{pl.event.getMonth()+1}}/{{pl.event.getFullYear()}} ({{plansText[pl.sub]}})</span>' +
                         '</div>' +
                         '<b>{{pl.title}}</b> ' +
                         '<div>{{pl.amount | currency:"EUR":0}}</div>' +

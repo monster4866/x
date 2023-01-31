@@ -32,11 +32,11 @@
             <hr/>
             <div style="display: grid;column-gap: 8px;row-gap: 8px;grid-template-columns: 1fr">
                 <div class="plansitem fadein"
-                     ng-repeat="pl in master.plans | orderBy: 'sub'">
+                     ng-repeat="pl in master.plans | orderBy: 'event'">
                 </div>
                 <div class="plansitem2" style="background: #f2f2f2; padding: 8px 16px">
                     <div>unverteiltes Vermögen für langfristige Ziele</div>
-                    <h5>{{master.wealth.santander + master.wealth.extern | currency:"EUR":0}}</h5>
+                    <h5>{{master.wealth.santander + master.wealth.extern - master.wealth.plans | currency:"EUR":0}}</h5>
                 </div>
             </div>
         </div>
@@ -54,6 +54,14 @@
                     <td align="right">{{account.amount | currency:"EUR":0}}</td>
                 </tr>
             </table>
+            <a ng-repeat="acn in navActions"
+               class="btn fab fab-menu"
+               data-bs-toggle="modal"
+               data-bs-target="#exampleModal"
+               style="background: var(--secondary-color-40);color: #FFF">
+                <span class="material-symbols-sharp">add</span>
+                neue Gelder
+            </a>
         </div>
     </div>
 </div>
