@@ -168,6 +168,7 @@
                class="btn fab fab-menu"
                ng-class="{'active': $location.split('/')[1] == 'home' }">
                 <span class="material-symbols-sharp">home</span>
+                Startseite
             </a>
             <a ng-repeat="nav in navs"
                ng-show="$route.current.params.id"
@@ -569,7 +570,10 @@
                 restrict: 'C',
                 template:
                     '<div style="padding: 8px 16px" ng-click="editPlans($index)">' +
-                        '<div style="float: right">({{plansText[pl.sub]}})</div> <b>{{pl.title}}</b> ' +
+                        '<div style="float: right">' +
+                            '<span>({{plansText[pl.sub]}})</span>' +
+                        '</div>' +
+                        '<b>{{pl.title}}</b> ' +
                         '<div>{{pl.amount | currency:"EUR":0}}</div>' +
                         '<div class="text fadein">{{pl.text}}</div>' +
                     '</div>'
