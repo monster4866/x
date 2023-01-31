@@ -1,0 +1,89 @@
+<div class="container h-100 popin">
+    <div class="row align-items-center h-100">
+        <div class="col">
+
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-click="modalbox=true"
+                           data-bs-toggle="modal" data-bs-target="#exampleModalx"/>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="plansitem"
+                         ng-repeat="pl in master.plans"
+                         ng-if="pl.sub==0">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="plansitem"
+                         ng-repeat="pl in master.plans"
+                         ng-if="pl.sub==1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="plansitem"
+                         ng-repeat="pl in master.plans"
+                         ng-if="pl.sub==2">
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            {{master.plans}}
+
+            <div class="row">
+                <div class="col">
+                    <hr/>
+                    <div>
+                        <div style="color: #5f6368">extern Wealth | {{master.wealth.extern | currency:"EUR":0}}</div>
+                        <p>Santander Wealth | {{master.wealth.santander | currency:"EUR":0}}</p>
+                        <div ng-repeat="account in accountData track by $index">
+                            <span class="text-bg-info" ng-hide="account.internal">extern</span>
+                            <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
+                            {{account.title}},
+                            {{account.amount | currency:"EUR":0}},
+                            {{account.text}},
+                            <span ng-show="account.realEstateAmount">{{account.realEstateAmount| currency:"EUR":0}},</span>
+                            <a href="" ng-hide="account.internal"
+                               data-bs-toggle="modal"
+                               data-bs-target="#exampleModal"
+                               ng-click="editWealth($index)">edit</a>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="footer"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="addWealth"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <input class="form-control" ng-model="plans.title" id="myInput" placeholder="Ihre Ziele und Wünsche"/>
+                Gesamt: {{master.wealth.santander + master.wealth.extern | currency:"EUR":0}}<br/>
+                Verplant: {{master.wealth.plans + plans.amount| currency:"EUR":0}}<br/>
+                Verfügbar: {{master.wealth.santander + master.wealth.extern - plans.amount - master.wealth.plans | currency:"EUR":0}}
+                <a href="" ng-click="plans.amount = (master.wealth.santander + master.wealth.extern- master.wealth.plans)">übernehmen</a>
+                <input type="number" class="form-control" ng-model="plans.amount" placeholder="Betrag"/>
+                <textarea class="form-control mb-2 ng-valid ng-dirty ng-valid-parse ng-touched ng-empty" id="exampleFormControlTextarea1" rows="3" ng-model="plans.text" placeholder="Notiz"></textarea>
+                {{plansText[plans.sub]}}
+                <input type="range" class="form-range" min="0" max="2" id="customRange2" value="0" ng-model="plans.sub">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" ng-click="addPlans(plans)">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

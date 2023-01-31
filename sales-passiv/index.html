@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>project cherry v7.2 | Vermögensberatung</title>
+    <title>project cherry v7.3 | Vermögensberatung</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
@@ -25,6 +25,9 @@
             transition: 0.35s ease-out;
             backgroundx: #a29bfe;
             padding: 8px;
+            box-shadowx: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+            z-index: 100;
+            position: relative;
         }
         nav-rail a {
             margin-bottom: 4px;
@@ -114,6 +117,42 @@
             .container-grid h3.card-title{font-size: 20px}
         }
     </style>
+    <style>
+        .fadein {
+            opacity: 0;
+            -webkit-transition: .25s ease all; /* Safari/Chrome */
+            -moz-transition: .25s ease all; /* Firefox */
+            -o-transition: .25s ease all; /* Opera */
+            transition: .25s ease all; /* IE10+ and Future Browsers */
+            animation: 0.25s ease 0s forwards 1 popin-animation;
+        }
+        @keyframes popin-animation {
+            0% {-webkit-transform: translateY(16px);opacity: 0}
+            100% {-webkit-transform: translateX(0);opacity:1}
+        }
+        .plansitem,.plansitem2{
+            background: var(--tertiary-color-95);
+            border-radius: 12px;
+            display: inline-grid;
+        }
+        .plansitem:hover{
+            background: var(--tertiary-color-90);
+            cursor: pointer;
+        }
+        .plansitem .sub{
+            border-radius: 12px;
+            padding: 4px 16px;
+            background: var(--tertiary-color-90);
+            float: left;
+        }
+        .plansitem .text{
+            display: none;
+            color: #5f6368;
+        }
+        .plansitem:hover .text{
+            display: block;
+        }
+    </style>
 </head>
 <body class="app-ready">
 
@@ -197,13 +236,17 @@
 <!-- Bootstrap -->
 <script src="../js/bootstrap.bundle.min.js"></script>
 
+<!-- ChartJS -->
+<script src="../js/chart.js"></script>
+
 <!-- AngularJS -->
 <script src="../js/angular.min.js"></script>
 <script src="../js/angular-route.min.js"></script>
+<script src="../js/angular-cookies.min.js"></script>
 <script src="../js/angular-locale_de-de.min.js"></script>
 
 <script>
-    /* (c) Copyright Patrick Nolte 2014-2022 All Rights Reserved */
+    /* (c) Copyright Patrick Nolte 2014-2023 All Rights Reserved */
 
     (function() {
         'use strict';
@@ -404,13 +447,6 @@
                 $rootScope.master.plans.splice(id, 1);
             }
 
-            const myModal = document.getElementById('exampleModalx')
-            const myInput = document.getElementById('myInput')
-
-            myModal.addEventListener('shown.bs.modal', () => {
-                myInput.focus()
-            })
-
             $scope.addWealth = function (){
                 $scope.slave['typ'] = $scope.slave.select.typ;
                 $scope.slave['title'] = $scope.slave.select.title;
@@ -425,6 +461,40 @@
                 $scope.selected = $scope.accountData[id].typ;
                 $scope.accountData.splice(id, 1);
             }
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Liquidität', 'Sicherheit', 'Rendite'],
+                        datasets: [{
+                            data: [
+                                1,
+                                1,
+                                1]
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: "right"
+                            }
+                        }
+                    }
+                }
+            );
+
+            $scope.$watch("accountData", function(obj) {
+
+                myChart.data.datasets[0].data = [
+                    $rootScope.master.wealth.liqui,
+                    $rootScope.master.wealth.sec,
+                    $rootScope.master.wealth.ren
+                ];
+                myChart.update();
+            }, true);
+
         }])
 
         ng.controller('select', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
@@ -498,13 +568,10 @@
             return {
                 restrict: 'C',
                 template:
-                    '<div style="background: var(--tertiary-color-95)">' +
-                    '<b>{{pl.title}}</b>' +
-                    '<a href="" ng-click="editPlans($index)"' +
-                    '   data-bs-toggle="modal" data-bs-target="#exampleModalx">edit</a>' +
-                    '<div>{{pl.amount}}</div>' +
-                    '<div>{{pl.text}}</div>' +
-                    '<hr/>' +
+                    '<div style="padding: 8px 16px" ng-click="editPlans($index)">' +
+                        '<div style="float: right">({{plansText[pl.sub]}})</div> <b>{{pl.title}}</b> ' +
+                        '<div>{{pl.amount | currency:"EUR":0}}</div>' +
+                        '<div class="text fadein">{{pl.text}}</div>' +
                     '</div>'
             };
         }]).directive("footer", [function() {
