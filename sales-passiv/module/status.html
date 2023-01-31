@@ -31,8 +31,8 @@
             </div>
             <hr/>
             <div style="display: grid;column-gap: 8px;row-gap: 8px;grid-template-columns: 1fr">
-                <div class="plansitem fadein"
-                     ng-repeat="pl in master.plans | orderBy: 'event'">
+                <div class="plansitem"
+                     ng-repeat="pl in master.plans | orderBy: 'event' track by $index">
                 </div>
                 <div class="plansitem2" style="background: #f2f2f2; padding: 8px 16px">
                     <div>unverteiltes Vermögen für langfristige Ziele</div>
@@ -41,9 +41,12 @@
             </div>
         </div>
         <div class="col">
-            <div style="height:35vh" >
+            <h4>Ihr Portfolio</h4>
+            <hr/>
+            <div style="height:20vh" >
                 <canvas id="myChart" style="margin-left: auto; margin-right: auto"></canvas>
             </div>
+            <hr/>
             <table class="table">
                 <tr ng-repeat="account in accountData track by $index">
                     <td>

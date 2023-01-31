@@ -134,11 +134,11 @@
             background: var(--tertiary-color-95);
             border-radius: 12px;
             display: inline-grid;
-            transition: .25s ease all; /* IE10+ and Future Browsers */
+            transition: .25s ease all; !important; /* IE10+ and Future Browsers */
         }
         .plansitem:hover{
             background: var(--tertiary-color-90);
-            transform: scale(1.02) !important;
+            transform: scale(1.04,1.0) !important;
             cursor: pointer;
         }
         .plansitem .sub{
@@ -149,11 +149,15 @@
         }
         .plansitem .text{
             display: none;
+            height: 0;
+            overflow: hidden;
             color: #5f6368;
         }
         .plansitem:hover .text{
+            height: auto;
             display: block;
         }
+
     </style>
 </head>
 <body class="app-ready">
@@ -178,19 +182,6 @@
                class="btn fab fab-menu"
                ng-class="{'active': $location.split('/')[3] == nav.href }">
                 <span class="material-symbols-sharp">{{nav.title}}</span>
-            </a>
-        </div>
-
-        <div class="nav-actions" style="display: inline-block" ng-show="$route.current.params.id">
-            <a ng-repeat="acn in navActions"
-               ng-show="acn"
-               href=""
-               class="btn fab fab-menu"
-               data-bs-toggle="{{acn.modal}}"
-               data-bs-target="#exampleModal"
-               style="background: var(--secondary-color-40);color: #FFF">
-                <span class="material-symbols-sharp">{{acn.ico}}</span>
-                {{acn.title}}
             </a>
         </div>
     </div>
@@ -468,9 +459,9 @@
                 $scope.plans.eventSlide = 0;
             }
 
-            $scope.editPlans = function (id){
-                $scope.plans = $rootScope.master.plans[id];
-                $rootScope.master.plans.splice(id, 1);
+            $scope.editPlans = function (obj){
+                $scope.plans = $rootScope.master.plans[$rootScope.master.plans.indexOf(obj)];
+                $rootScope.master.plans.splice($rootScope.master.plans.indexOf(obj), 1);
             }
 
             $scope.addWealth = function (){
@@ -506,7 +497,8 @@
                             legend: {
                                 position: "right"
                             }
-                        }
+                        },
+                        maintainAspectRatio: false
                     }
                 }
             );
@@ -600,11 +592,11 @@
             return {
                 restrict: 'C',
                 template:
-                    '<div style="padding: 8px 16px" ng-click="editPlans($index)">' +
+                    '<div class="plansinside" style="padding: 8px 16px" ng-click="editPlans(pl)">' +
                         '<div style="float: right">' +
                             '<span>{{pl.event.getMonth()+1}}/{{pl.event.getFullYear()}} ({{plansText[pl.sub]}})</span>' +
                         '</div>' +
-                        '<b>{{pl.title}}</b> ' +
+                        '<b>{{pl.title}} ({{$index}})</b> ' +
                         '<div>{{pl.amount | currency:"EUR":0}}</div>' +
                         '<div class="text fadein">{{pl.text}}</div>' +
                     '</div>'
