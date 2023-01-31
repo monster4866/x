@@ -4,7 +4,7 @@
             <div>
                 <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-model="plans.title"/>
                 <div ng-show="plans.title"
-                class="fadein" style="background: var(--primary-color-90);border-bottom-right-radius: 28px">
+                class="fadein" style="background: var(--primary-color-90)">
                     <div class="row">
                         <div class="col">
                             <textarea class="form-control" rows="3" ng-model="plans.text" placeholder="Notiz"></textarea>
@@ -12,17 +12,21 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col">
-                            <div class="input-group">
+                            <div class="input-group fadein" ng-show="!showSlide">
                                 <input type="number" class="form-control" ng-model="plans.amount" placeholder="Betrag"/>
-                                <input type="month" class="form-control" ng-model="plans.time" placeholder=""/>
-                                <button type="button" class="btn secondary-color" style="min-width: 58px">
+                                <input type="month" class="form-control" ng-model="plans.event"/>
+                                <button type="button" class="btn secondary-color" style="min-width: 58px" ng-click="showSlide=true">
                                     <span class="material-symbols-sharp">tune</span>
                                 </button>
                                 <button type="button" class="btn primary-color" ng-click="addPlans(plans)">Speichern</button>
                             </div>
+                            <div class="fadein" ng-show="showSlide" style="padding: 8px 16px">
+                                {{plans.eventSlide}} Monate, {{(plans.eventSlide/12).toFixed(0)}} Jahre
+                                <input type="range" class="slider" min="0" max="96" ng-model="plans.eventSlide" ng-mouseup="showSlide=false;addMonths()">
+                                <input type="range" class="slider" min="0" max="2" value="0" ng-model="plans.sub" ng-mouseup="showSlide=false" style="display: none">
+                            </div>
                         </div>
                     </div>
-                    <input type="range" class="form-range" min="0" max="2" id="customRange2" value="0" ng-model="plans.sub" style="display: none">
                 </div>
             </div>
             <hr/>

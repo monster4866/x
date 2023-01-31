@@ -432,6 +432,8 @@
                 {typ:200, title:'Girokonto'}
             ];
             $scope.plansText = ['Kurzfristig','Mittelfristig','Langfristig']
+            $scope.plans = []
+            $scope.plans.eventSlide = 0;
 
             $scope.addPlans = function (){
                 $rootScope.master.plans.push({
@@ -495,6 +497,12 @@
                 ];
                 myChart.update();
             }, true);
+
+            $scope.addMonths = function ()
+            {
+                const date = new Date();
+                $scope.plans.event = new Date(date.setMonth(date.getMonth()+$scope.plans.eventSlide));
+            }
 
         }])
 
