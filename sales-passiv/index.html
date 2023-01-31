@@ -148,16 +148,25 @@
             float: left;
         }
         .plansitem .text{
-            display: none;
-            height: 0;
+            max-height: 0;
             overflow: hidden;
             color: #5f6368;
+            transition: max-height .50s ease;
         }
         .plansitem:hover .text{
-            height: auto;
-            display: block;
+            max-height: 200px;
         }
-
+        .table > tbody > tr{
+            transition: .25s ease all;
+            border-color: rgba(0,0,0,0.12);
+        }
+        .table > tbody > tr:hover{
+            background: var(--tertiary-color-95);
+        }
+        .table tr td {
+            font-size: 13px;
+            padding: 8px 16px;
+        }
     </style>
 </head>
 <body class="app-ready">
@@ -165,7 +174,7 @@
 <nav class="d-none d-sm-block">
     <div class="nav-btn">
         <a href="../"
-           class="btn fab fab-menu">
+           class="btn fab fab-menu" style="min-width: 56px">
             <span class="material-symbols-sharp">menu</span>
         </a>
 
@@ -376,9 +385,9 @@
 
             /* NAV */
             $scope.navs = [
-                { title: "layers", href : "status", tooltip: "status"},
-                { title: "view_in_ar_new", href : "select", tooltip: "overview"},
-                { title: "join_right", href : "offer", tooltip: "offer"}
+                { title: "layers", title2: "Status", href : "status", tooltip: "status"},
+                { title: "view_in_ar_new", title2: "Auswahl", href : "select", tooltip: "overview"},
+                { title: "join_right", title2: "Empfehlung", href : "offer", tooltip: "offer"}
             ]
 
             $rootScope.navActions = [
@@ -495,7 +504,7 @@
                     options: {
                         plugins: {
                             legend: {
-                                position: "right"
+                                position: "bottom"
                             }
                         },
                         maintainAspectRatio: false
@@ -519,6 +528,10 @@
                 $scope.plans.event = new Date(date.setMonth(date.getMonth()+$scope.plans.eventSlide));
             }
 
+            $scope.viewpoint = function (obj){
+                myChart.config.type = obj;
+                myChart.update();
+            }
         }])
 
         ng.controller('select', ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
@@ -598,7 +611,7 @@
                         '</div>' +
                         '<b>{{pl.title}} ({{$index}})</b> ' +
                         '<div>{{pl.amount | currency:"EUR":0}}</div>' +
-                        '<div class="text fadein">{{pl.text}}</div>' +
+                        '<div class="text">{{pl.text}}</div>' +
                     '</div>'
             };
         }]).directive("footer", [function() {

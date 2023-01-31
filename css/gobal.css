@@ -106,9 +106,11 @@ h1{
 }
 .btn.fab.fab-menu{
     border-radius: 28px;
+
 }
 .btn.fab.fab-menu.active{
     background: var(--tertiary-color-90);
+    color: var(--tertiary-color-40) !important;
 }
 .btn.fab>span{
     font-size: 24px;
