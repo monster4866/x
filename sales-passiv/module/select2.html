@@ -1,0 +1,141 @@
+<style>
+    .pie {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%
+    }
+    table, th, td {
+        border: 3px solid white;
+        border-collapse: collapse;
+    }
+    th, td {
+        background-color: #96D4D4;
+        padding: 3px;
+        border-radius: 10px;
+    }
+</style>
+<div class="container h-100 popin">
+    <div class="row align-items-center h-100">
+        <div class="col">
+            <div class="row" style="background: var(--secondary-color-95)">
+                <div class="col">
+                    <div>
+                        <a href="" ng-click="getRisk('./wphg-invalid.json')">nicht aktuell</a> |
+                        <a href="" ng-click="getRisk('./wphg-valid-c2.json')">RK II</a> |
+                        <a href="" ng-click="getRisk('./wphg-valid-c3.json')">RK III</a>
+                        <a href="" ng-click="getRisk('./wphg-valid-c4.json')">RK IV</a>
+                    </div>
+                    <div ng-hide="risk.valid">
+                        <span class="material-symbols-sharp text-danger">warning</span>
+                        Profil muss aktualisiert werden
+                    </div>
+                    <div ng-show="risk.valid">
+                        <span class="material-symbols-sharp text-success">check_circle</span>
+                        Profil aktuell
+                        <div style="color: #999">Anlageklasse: {{risk.class}}</div>
+                        {{risk}}
+                    </div>
+                    <div>
+                        <a href="../wphg/#!/customer/ID1" target="_blank">Wechsel zu WpHG</a><br/>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row" ng-show="risk.valid">
+                <div class="col">
+                    <b>Vermögensverteilung</b>
+                    <p>Empfohlen: {{portfolio}}</p>
+                    <div class="pie"
+                        ng-style="{'background-image': 'conic-gradient(orange '+(portfolio.sec*360)+'deg, blue '+(portfolio.sec*360)+'deg)'}"></div>
+                    <hr/>
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td>aktuell</td>
+                            <td>aktuell %</td>
+                            <td>empfohlen %</td>
+                            <td>empfohlen</td>
+                            <td>verteilung</td>
+                        </tr>
+                        <tr>
+                            <td>gesamt</td>
+                            <td>{{master.wealth.liqui + master.wealth.sec + master.wealth.ren}}</td>
+                        </tr>
+                        <tr>
+                            <td>Liq</td>
+                            <td>{{master.wealth.liqui}}</td>
+                            <td>{{master.wealth.liqui/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)*100 | number : '1.2'}}%</td>
+                            <td>{{kft/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)*100 | number : '1.2'}}%</td>
+                            <td>{{kft}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sec</td>
+                            <td>{{master.wealth.sec}}</td>
+                            <td>{{master.wealth.sec/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)*100 | number : '1.2'}}%</td>
+                            <td>{{(1-(kft/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)))*portfolio.sec*100 | number : '1.2'}}%</td>
+                            <td>{{(master.wealth.liqui + master.wealth.sec + master.wealth.ren-kft)*portfolio.sec}}</td>
+                            <td>{{((master.wealth.liqui + master.wealth.sec + master.wealth.ren -kft)*portfolio.sec)-master.wealth.sec}}</td>
+                        </tr>
+                        <tr>
+                            <td>Ren</td>
+                            <td>{{master.wealth.ren}}</td>
+                            <td>{{master.wealth.ren/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)*100 | number : '1.2'}}%</td>
+                            <td>{{(1-(kft/(master.wealth.liqui + master.wealth.sec + master.wealth.ren)))*portfolio.ren*100 | number : '1.2'}}%</td>
+                            <td>{{(master.wealth.liqui + master.wealth.sec + master.wealth.ren-kft)*portfolio.ren}}</td>
+                            <td>{{((master.wealth.liqui + master.wealth.sec + master.wealth.ren -kft)*portfolio.ren)-master.wealth.ren}}</td>
+
+                        </tr>
+                    </table>
+                    <hr/>
+                </div>
+            </div>
+
+            <div ng-repeat="account in accountData track by $index" ng-show="risk.valid">
+                <div class="item"
+                     ng-class="{'active': accountData[$index].active == true }">
+                    <input class="form-check-input" type="checkbox"
+                           ng-model="account.active"
+                           ng-click="testaccounts[$index].amount2 = account.amount"
+                           ng-if="account.typ > 299">
+                    <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
+                    <span class="text-bg-info" ng-hide="account.internal">extern</span>
+                    {{account.title}},
+                    {{account.amount | currency:"EUR":0}},
+                    {{account.text}},
+                    <span ng-if="!account.internal">
+                        <span ng-if="account.typ == 500">
+                        <a href="../docs" target="_blank">Depotübernahme</a>
+                        </span>
+                        <span ng-if="account.typ < 300">
+                            <a href="../docs" target="_blank">Kontoübernahme</a>
+                            <a href="../docs" target="_blank">Überweisungsauftrag</a>
+                        </span>
+                    </span>
+                </div>
+                <div ng-repeat="depot in account.data" class="item"
+                     ng-class="{'active': depot.sell == true }">
+
+                    <input class="form-check-input" type="checkbox"
+                           ng-model="depot.sell"
+                           ng-change="depot.selectAmount = (depot.stk * depot.price)"
+                           style="margin-left: 16px">
+
+                    <div ng-show="depot.internal" style="display: inline-block">
+                        <span class="text-bg-success" ng-show="risk.class >= depot.class">Halten</span>
+                        <span class="text-bg-danger" ng-show="risk.class < depot.class">Verkaufen</span>
+                    </div>
+
+                    {{depot.title}},
+                    {{depot.stk * depot.price | currency:"EUR":0}},
+                    <input type="number" class="form-control" ng-if="depot.sell" ng-model="depot.selectAmount"/>
+                </div>
+            </div>
+            <hr/>
+            {{accountData}}
+            <hr/>
+            <div class="footer"></div>
+        </div>
+    </div>
+</div>
+
+<div class="addWealth"></div>

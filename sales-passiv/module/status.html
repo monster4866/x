@@ -1,6 +1,11 @@
 <div class="container h-100 popin">
     <div class="row align-items-center h-100">
         <div class="col">
+            <div ng-hide="plans.title || master.plans.length > 0">
+                <h3 style="color: #5f6368">Ihr Experte für Finanzen hilft Ihnen,<br/><span style="color: #000">Ihre Pläne, Träume und Ziele</span> zu verwirklichen.</h3>
+                <div>Durch unser umfangreiches Leistungsspektrum zum Thema Geld sind Sie mit uns als Finanzpartner gut aufgehoben. Damit aus großen Plänen die besten Momente werden.</div>
+                <hr/>
+            </div>
             <div>
                 <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-model="plans.title"/>
                 <div ng-show="plans.title"
@@ -21,9 +26,9 @@
                                 <button type="button" class="btn primary-color" ng-click="addPlans(plans)">Speichern</button>
                             </div>
                             <div class="fadein" ng-show="showSlide" style="padding: 8px 16px">
-                                {{plans.eventSlide}} Monate, {{(plans.eventSlide/12).toFixed(0)}} Jahre
-                                <input type="range" class="slider" min="0" max="96" ng-model="plans.eventSlide" ng-mouseup="showSlide=false;addMonths()">
-                                <input type="range" class="slider" min="0" max="2" value="0" ng-model="plans.sub" ng-mouseup="showSlide=false" style="display: none">
+                                {{(plans.eventSlide/12).toFixed(1)}} Jahre <span style="color: #5f6368">({{plans.eventSlide}} Monate)</span>
+                                <input type="range" class="slider" min="0" max="96" ng-model="plans.eventSlide" ng-mouseup="showSlide=false" ng-change="addMonths()">
+                                {{plans.event | date:'MM/yyyy'}}
                             </div>
                         </div>
                     </div>
@@ -41,35 +46,57 @@
             </div>
         </div>
         <div class="col">
-            <table class="table">
-                <thead>
-                <tr>
-                    <td>Ihr Portfolio</td>
-                    <td align="right">
-                        <small>Vermögen</small><br/>
-                        {{master.wealth.santander + master.wealth.extern | currency:"EUR":0}}
-                    </td>
-                </tr>
-                </thead>
-            </table>
-            <div class="dropdown">
-                <button class="btn secondary-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ansicht
-                    <span class="material-symbols-sharp"> expand_more </span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="" ng-click="viewpoint('doughnut')">doughnut</a></li>
-                    <li><a class="dropdown-item" href="" ng-click="viewpoint('pie')">pie</a></li>
-                    <li><a class="dropdown-item" href="" ng-click="viewpoint('polarArea')">polarArea</a></li>
-                    <li><a class="dropdown-item" href="" ng-click="viewpoint('bar')">bar</a></li>
-                </ul>
+            <div >
+                <h3 style="color: #5f6368">Ihr <span style="color: #000">Vermögensverteilung</span></h3>
+                <div>Wenn aus Chance, Wachstum wird, schaffen wir die Sicherheit für Ihre Vermögen.</div>
+                <hr/>
             </div>
 
+            <div style="display: inline-block">
+                <a ng-repeat="acn in navActions"
+                   class="btn primary-color"
+                   data-bs-toggle="modal"
+                   data-bs-target="#exampleModal">
+                    <span class="material-symbols-sharp">add</span>
+                    Portfolio
+                </a>
+                <div class="dropdown" style="display: inline-block">
+                    <button class="btn secondary-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ansicht
+                        <span class="material-symbols-sharp"> expand_more </span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="" ng-click="viewpoint('doughnut')">doughnut</a></li>
+                        <li><a class="dropdown-item" href="" ng-click="viewpoint('pie')">pie</a></li>
+                        <li><a class="dropdown-item" href="" ng-click="viewpoint('polarArea')">polarArea</a></li>
+                        <li><a class="dropdown-item" href="" ng-click="viewpoint('bar')">bar</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr/>
             <div style="height:20vh" >
                 <canvas id="myChart" width="100%"></canvas>
             </div>
             <hr/>
-            <table class="table">
+
+            <div class="input-group" style="display: none">
+                <input type="text" class="form-control" ng-model="x" placeholder="+ Portfolio"/>
+                <input type="number" class="form-control" ng-model="x" placeholder="Betrag"/>
+                <button type="button" class="btn primary-color" ng-click="addPlans(plans)">+</button>
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                <span class="material-symbols-sharp">warning</span>
+                Hoher Anteil an Liquidität!
+            </div>
+
+            <table class="table mt-2">
+                <thead>
+                <tr>
+                    <td>Ihr Portfolio</td>
+                    <td align="right"><b>{{master.wealth.santander + master.wealth.extern | currency:"EUR":0}}</b></td>
+                </tr>
+                </thead>
                 <tbody>
                 <tr ng-repeat="account in accountData track by $index">
                     <td>
@@ -85,13 +112,6 @@
                 </tr>
                 </tbody>
             </table>
-            <a ng-repeat="acn in navActions"
-               class="btn primary-color"
-               data-bs-toggle="modal"
-               data-bs-target="#exampleModal">
-                <span class="material-symbols-sharp">add</span>
-                Portfolio
-            </a>
         </div>
     </div>
 </div>
