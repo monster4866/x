@@ -1,29 +1,40 @@
 <div class="container h-100 popin">
     <div class="row align-items-center h-100">
-        <div class="col">
+        <div class="col" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
             <div ng-hide="plans.title || master.plans.length > 0">
                 <h3 style="color: #5f6368">Ihr Experte für Finanzen hilft Ihnen,<br/><span style="color: #000">Ihre Pläne, Träume und Ziele</span> zu verwirklichen.</h3>
                 <div>Durch unser umfangreiches Leistungsspektrum zum Thema Geld sind Sie mit uns als Finanzpartner gut aufgehoben. Damit aus großen Plänen die besten Momente werden.</div>
                 <hr/>
             </div>
-            <div>
-                <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-model="plans.title"/>
+            <form style="margin: 0">
+                <div class="form-floating">
+                    <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-model="plans.title"/>
+                    <label>Ihre Ziele und Wünsche</label>
+                    <button ng-show="plans.title" ng-click="plans.title=''" tabindex="-1" type="button"><span class="material-symbols-sharp">cancel</span></button>
+                </div>
+
                 <div ng-show="plans.title"
                 class="fadein" style="background: var(--primary-color-90);padding-bottom: 8px; border-radius: 0 0 4px 4px;">
                     <div class="row pt-2">
                         <div class="col">
-                            <textarea class="form-control" rows="3" ng-model="plans.text" placeholder="Notiz"></textarea>
+                            <div class="form-floating">
+                                <textarea class="form-control" style="height: 100px" ng-model="plans.text" placeholder="Notiz"></textarea>
+                                <label>Notiz</label>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col">
                             <div class="input-group fadein" ng-show="!showSlide">
-                                <input type="number" class="form-control" ng-model="plans.amount" placeholder="Betrag"/>
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" ng-model="plans.amount" placeholder="Betrag"/>
+                                    <label>Betrag</label>
+                                </div>
                                 <input type="month" class="form-control" ng-model="plans.event"/>
-                                <button type="button" class="btn secondary-color" style="min-width: 58px" ng-click="showSlide=true">
+                                <button type="button" class="btn secondary-color" style="min-width: 58px;padding-left: 0;padding-right:0;font-size: 24px" ng-click="showSlide=true">
                                     <span class="material-symbols-sharp">tune</span>
                                 </button>
-                                <button type="button" class="btn primary-color" ng-click="addPlans(plans)">Speichern</button>
+                                <button type="submit" class="btn primary-color" ng-click="addPlans(plans)">Speichern</button>
                             </div>
                             <div class="fadein" ng-show="showSlide" style="padding: 8px 16px">
                                 {{(plans.eventSlide/12).toFixed(1)}} Jahre <span style="color: #5f6368">({{plans.eventSlide}} Monate)</span>
@@ -33,7 +44,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
             <hr/>
             <div style="display: grid;column-gap: 8px;row-gap: 8px;grid-template-columns: 1fr">
                 <div class="plansitem"
@@ -45,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
             <div >
                 <h3 style="color: #5f6368">Ihr <span style="color: #000">Vermögensverteilung</span></h3>
                 <div>Wenn aus Chance, Wachstum wird, schaffen wir die Sicherheit für Ihre Vermögen.</div>
