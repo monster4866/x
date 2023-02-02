@@ -167,6 +167,25 @@
             padding: 8px 16px;
         }
     </style>
+    <style>
+        .list .material-symbols-sharp{
+            font-size: 24px;
+        }
+        .list > .list-item{
+            background: rgba(0,0,0,0.04);
+            padding: 8px 24px 8px 16px;
+            line-height: 24px;
+        }
+        .list > .list-item:hover{
+            background: rgba(0,0,0,0.08);
+        }
+        .list > .list-item:focus{
+            background: rgba(0,0,0,0.12);
+        }
+        .list > .list-item > div{
+            display: inline-block;
+        }
+    </style>
 </head>
 <body class="app-ready">
 
@@ -490,7 +509,7 @@
             const myChart = new Chart(
                 document.getElementById('myChart'),
                 {
-                    type: 'doughnut',
+                    type: 'pie',
                     data: {
                         labels: ['Liquidität', 'Sicherheit', 'Rendite'],
                         datasets: [{
@@ -501,9 +520,10 @@
                         }]
                     },
                     options: {
+                        responsive: false,
                         plugins: {
                             legend: {
-                                position: "bottom"
+                                position: "right"
                             }
                         },
                         maintainAspectRatio: false

@@ -9,7 +9,7 @@
             <div>
                 <input class="form-control" placeholder="Ihre Ziele und Wünsche" ng-model="plans.title"/>
                 <div ng-show="plans.title"
-                class="fadein" style="background: var(--primary-color-90)">
+                class="fadein" style="background: var(--primary-color-90);padding-bottom: 8px; border-radius: 0 0 4px 4px;">
                     <div class="row pt-2">
                         <div class="col">
                             <textarea class="form-control" rows="3" ng-model="plans.text" placeholder="Notiz"></textarea>
@@ -39,7 +39,7 @@
                 <div class="plansitem"
                      ng-repeat="pl in master.plans | orderBy: 'event' track by $index">
                 </div>
-                <div class="plansitem2" style="background: #f2f2f2; padding: 8px 16px">
+                <div class="plansitem2 mb-2" style="background: #f2f2f2; padding: 8px 16px">
                     <div>unverteiltes Vermögen für langfristige Ziele</div>
                     <div>{{master.wealth.santander + master.wealth.extern - master.wealth.plans | currency:"EUR":0}}</div>
                 </div>
@@ -74,8 +74,12 @@
                 </div>
             </div>
             <hr/>
-            <div style="height:20vh" >
-                <canvas id="myChart" width="100%"></canvas>
+            <div class="alert alert-warning" role="alert">
+                <span class="material-symbols-sharp">warning</span>
+                Hoher Anteil an Liquidität!
+            </div>
+            <div style="height:20vh;width: 100%">
+                <canvas id="myChart" style="max-width: 300px;margin-right: auto; margin-left: auto;height:20vh"></canvas>
             </div>
             <hr/>
 
@@ -83,11 +87,6 @@
                 <input type="text" class="form-control" ng-model="x" placeholder="+ Portfolio"/>
                 <input type="number" class="form-control" ng-model="x" placeholder="Betrag"/>
                 <button type="button" class="btn primary-color" ng-click="addPlans(plans)">+</button>
-            </div>
-
-            <div class="alert alert-warning" role="alert">
-                <span class="material-symbols-sharp">warning</span>
-                Hoher Anteil an Liquidität!
             </div>
 
             <table class="table mt-2">
@@ -112,6 +111,22 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div class="list" style="display: none">
+                <div class="list-item">
+                    <div class="material-symbols-sharp">warning</div>
+                    <div class="list-text">
+                        <div class="list-title">Title</div>
+                        <div class="list-subtitle">Subtitle</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="material-symbols-sharp">warning</div>
+                    <div class="list-text">
+                        <div class="list-title">Title</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
