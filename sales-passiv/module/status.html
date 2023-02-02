@@ -1,6 +1,15 @@
+<style>
+    .colscroll {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .colscroll::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+    }
+</style>
 <div class="container h-100 popin">
     <div class="row align-items-center h-100">
-        <div class="col" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
+        <div class="col colscroll" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
             <div ng-hide="plans.title || master.plans.length > 0">
                 <h3 style="color: #5f6368">Ihr Experte für Finanzen hilft Ihnen,<br/><span style="color: #000">Ihre Pläne, Träume und Ziele</span> zu verwirklichen.</h3>
                 <div>Durch unser umfangreiches Leistungsspektrum zum Thema Geld sind Sie mit uns als Finanzpartner gut aufgehoben. Damit aus großen Plänen die besten Momente werden.</div>
@@ -57,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="col" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
+        <div class="col colscroll" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
             <div >
                 <h3 style="color: #5f6368">Ihr <span style="color: #000">Vermögensverteilung</span></h3>
                 <div>Wenn aus Chance, Wachstum wird, schaffen wir die Sicherheit für Ihre Vermögen.</div>
