@@ -23,9 +23,17 @@
             width: 72px;
             padding: 8px;
         }
+        nav > a{
+            margin-bottom: 4px;
+        }
         main{
             width: 100%;
-            overflow: hidden;
+            overflow-x: scroll;
+        }
+        main .panel{
+            padding-top: 16px;
+            padding-bottom: 16px;
+            position: relative;
         }
     </style>
     <style>
@@ -48,7 +56,6 @@
             .card{height: 160px;width: 100%}
             .container-grid h3.card-title{font-size: 20px}
             .container{overflow-x: hidden}
-            main{height: calc(100% - 80px);}
         }
         @media (min-width: 576px) {
         }
@@ -103,13 +110,15 @@
         }
         .table > tbody > tr{
             transition: .25s ease all;
+            background: rgba(0,0,0,0.04);
             border-color: rgba(0,0,0,0.12);
         }
         .table > tbody > tr:hover{
-            background: var(--tertiary-color-95);
+            background: var(--primary-color-95);
         }
         .table tr td {
             padding: 8px 16px;
+            line-height: 24px;
         }
     </style>
     <style>
@@ -120,6 +129,10 @@
             background: rgba(0,0,0,0.04);
             padding: 8px 24px 8px 16px;
             line-height: 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .list > .list-item .list-subtitle{
+            font-size: 12px;
         }
         .list > .list-item:hover{
             background: rgba(0,0,0,0.08);
@@ -130,12 +143,22 @@
         .list > .list-item > div{
             display: inline-block;
         }
+        .list > .list-item .material-symbols-sharp{
+            line-height: inherit;
+        }
+        .list > .list-item .material-symdbols-sharp::before{
+            content: "radio_button_unchecked";
+        }
+        .list > .list-item:hover .material-symbols-sharp::before{
+            content: "radio_button_checked";
+            color: var(--primary-color-40);
+        }
     </style>
 </head>
 <body class="app-ready">
 
 <root>
-    <nav>
+    <nav class="d-none d-sm-block">
         <a href="../"
            class="btn fab fab-menu" style="min-width: 56px">
             <span class="material-symbols-sharp">menu</span>
@@ -161,14 +184,15 @@
 <!-- Bootstrap -->
 <script src="../js/bootstrap.bundle.min.js"></script>
 
-<!-- ChartJS -->
-<script src="../js/chart.js"></script>
-
 <!-- AngularJS -->
 <script src="../js/angular.min.js"></script>
 <script src="../js/angular-route.min.js"></script>
 <script src="../js/angular-cookies.min.js"></script>
 <script src="../js/angular-locale_de-de.min.js"></script>
+
+<!-- ChartJS -->
+<script src="../js/Chart.bundle.min.js"></script>
+<script src="../js/angular-chart.min.js"></script>
 
 <script>
     /* (c) Copyright Patrick Nolte 2014-2023 All Rights Reserved */
@@ -177,10 +201,11 @@
         'use strict';
 
         const ng = angular.module('app', [
-            'ngRoute'
+            'ngRoute',
+            'chart.js'
         ]);
 
-        ng.config(['$routeProvider', '$locationProvider',function($routeProvider, $locationProvider) {
+        ng.config(['$routeProvider', '$locationProvider', 'ChartJsProvider',function($routeProvider, $locationProvider, ChartJsProvider) {
             $routeProvider
                 .when('/home', {templateUrl: './module/home.html'})
                 .when('/home/new', {templateUrl: './module/home-new.html'})
@@ -192,6 +217,10 @@
                 .otherwise({redirectTo: '/home'});
             $locationProvider.html5Mode(false);
             $locationProvider.hashPrefix('!');
+            ChartJsProvider.setOptions({
+                chartColors: [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+                responsive: false
+            });
         }])
 
         ng.run(function ($rootScope, $location,$route) {
@@ -360,6 +389,7 @@
             $scope.plans.eventSlide = 0;
 
             $scope.addPlans = function (){
+                if(!$scope.plans.title) return;
                 if(!$scope.plans.event){
                     $scope.plans.event = new Date();
                 }
@@ -410,39 +440,9 @@
                 $scope.accountData.splice(id, 1);
             }
 
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                {
-                    type: 'pie',
-                    data: {
-                        labels: ['Liquidität', 'Sicherheit', 'Rendite'],
-                        datasets: [{
-                            data: [
-                                1,
-                                1,
-                                1]
-                        }]
-                    },
-                    options: {
-                        responsive: false,
-                        plugins: {
-                            legend: {
-                                position: "right"
-                            }
-                        },
-                        maintainAspectRatio: false
-                    }
-                }
-            );
 
             $scope.$watch("accountData", function(obj) {
 
-                myChart.data.datasets[0].data = [
-                    $rootScope.master.wealth.liqui,
-                    $rootScope.master.wealth.sec,
-                    $rootScope.master.wealth.ren
-                ];
-                myChart.update();
             }, true);
 
             $scope.addMonths = function ()
@@ -451,9 +451,12 @@
                 $scope.plans.event = new Date(date.setMonth(date.getMonth()+$scope.plans.eventSlide));
             }
 
-            $scope.viewpoint = function (obj){
-                myChart.config.type = obj;
-                myChart.update();
+            $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+            $scope.data = [300, 500, 100];
+            $scope.options = {
+                responsive: false,
+                maintainAspectRatio: true,
+                showScale: false
             }
         }])
 
@@ -529,10 +532,13 @@
                 restrict: 'C',
                 template:
                     '<div class="plansinside" style="padding: 8px 16px" ng-click="editPlans(pl)">' +
-                        '<div style="float: right">' +
-                            '<span>{{pl.event.getMonth()+1}}/{{pl.event.getFullYear()}} ({{plansText[pl.sub]}})</span>' +
+                        '<div style="float: right; color: var(--tertiary-color-40)">' +
+                            '<span>' +
+                                '<span>{{pl.event.getMonth()+1}}/{{pl.event.getFullYear()}}</span>' +
+                                '<span> - {{plansText[pl.sub]}}</span>' +
+                            '</span>' +
                         '</div>' +
-                        '<b>{{pl.title}} ({{$index}})</b> ' +
+                        '<b>{{pl.title}}</b> ' +
                         '<div>{{pl.amount | currency:"EUR":0}}</div>' +
                         '<div class="text">{{pl.text}}</div>' +
                     '</div>'

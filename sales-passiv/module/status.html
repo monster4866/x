@@ -1,18 +1,14 @@
 <style>
-    .colscroll {
-        -ms-overflow-style: none;  /* Internet Explorer 10+ */
-        scrollbar-width: none;  /* Firefox */
-    }
-    .colscroll::-webkit-scrollbar {
-        display: none;  /* Safari and Chrome */
+    .bg-color-primary{
+        background: var(--primary-color-90);
     }
 </style>
 <div class="container h-100 popin">
     <div class="row align-items-center h-100">
-        <div class="col colscroll" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
-            <div ng-hide="plans.title || master.plans.length > 0">
-                <h3 style="color: #5f6368">Ihr Experte für Finanzen hilft Ihnen,<br/><span style="color: #000">Ihre Pläne, Träume und Ziele</span> zu verwirklichen.</h3>
-                <div>Durch unser umfangreiches Leistungsspektrum zum Thema Geld sind Sie mit uns als Finanzpartner gut aufgehoben. Damit aus großen Plänen die besten Momente werden.</div>
+        <div class="col-lg panel">
+            <div>
+                <h3 style="color: #888">Ihr Experte für Finanzen hilft Ihnen,<br/><span style="color: #000">Ihre Pläne, Träume und Ziele</span> zu verwirklichen.</h3>
+                <div ng-hide="plans.title || master.plans.length > 0">Durch unser umfangreiches Leistungsspektrum zum Thema Geld sind Sie mit uns als Finanzpartner gut aufgehoben. Damit aus großen Plänen die besten Momente werden.</div>
                 <hr/>
             </div>
             <form style="margin: 0">
@@ -60,61 +56,43 @@
                 <div class="plansitem"
                      ng-repeat="pl in master.plans | orderBy: 'event' track by $index">
                 </div>
-                <div class="plansitem2 mb-2" style="background: #f2f2f2; padding: 8px 16px">
+                <div class="plansitem2 mb-2" style="background: rgba(0,0,0,0.04); padding: 8px 16px">
                     <div>unverteiltes Vermögen für langfristige Ziele</div>
-                    <div>{{master.wealth.santander + master.wealth.extern - master.wealth.plans | currency:"EUR":0}}</div>
+                    <div>{{master.wealth.santander + addWealthx - master.wealth.plans | currency:"EUR":0}}</div>
                 </div>
             </div>
         </div>
-        <div class="col colscroll" style="max-height: 100%; padding-top: 24px; padding-bottom: 24px; overflow: scroll">
-            <div >
-                <h3 style="color: #5f6368">Ihr <span style="color: #000">Vermögensverteilung</span></h3>
-                <div>Wenn aus Chance, Wachstum wird, schaffen wir die Sicherheit für Ihre Vermögen.</div>
-                <hr/>
-            </div>
+        <div class="col-lg panel">
 
-            <div style="display: inline-block">
-                <a ng-repeat="acn in navActions"
-                   class="btn primary-color"
-                   data-bs-toggle="modal"
-                   data-bs-target="#exampleModal">
-                    <span class="material-symbols-sharp">add</span>
-                    Portfolio
-                </a>
-                <div class="dropdown" style="display: inline-block">
-                    <button class="btn secondary-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ansicht
-                        <span class="material-symbols-sharp"> expand_more </span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="" ng-click="viewpoint('doughnut')">doughnut</a></li>
-                        <li><a class="dropdown-item" href="" ng-click="viewpoint('pie')">pie</a></li>
-                        <li><a class="dropdown-item" href="" ng-click="viewpoint('polarArea')">polarArea</a></li>
-                        <li><a class="dropdown-item" href="" ng-click="viewpoint('bar')">bar</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr/>
-            <div class="alert alert-warning" role="alert">
-                <span class="material-symbols-sharp">warning</span>
-                Hoher Anteil an Liquidität!
-            </div>
-            <div style="height:20vh;width: 100%">
-                <canvas id="myChart" style="max-width: 300px;margin-right: auto; margin-left: auto;height:20vh"></canvas>
-            </div>
-            <hr/>
+            <canvas id="doughnut" class="chart chart-doughnut"
+                    chart-data="data" chart-labels="labels">
+            </canvas>
 
-            <div class="input-group" style="display: none">
-                <input type="text" class="form-control" ng-model="x" placeholder="+ Portfolio"/>
-                <input type="number" class="form-control" ng-model="x" placeholder="Betrag"/>
-                <button type="button" class="btn primary-color" ng-click="addPlans(plans)">+</button>
-            </div>
-
-            <table class="table mt-2">
+            <table class="table">
                 <thead>
                 <tr>
-                    <td>Ihr Portfolio</td>
-                    <td align="right"><b>{{master.wealth.santander + master.wealth.extern | currency:"EUR":0}}</b></td>
+                    <td style="border: 0; padding: 8px 16px">
+                        <button class="btn primary-color"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <span class="material-symbols-sharp">add</span>
+                            Vermögen
+                        </button>
+                    </td>
+                    <td style="border: 0; padding: 8px 16px" align="right">
+                        <small>Vermögen</small>
+                        <div>{{master.wealth.santander + addWealthx | currency:"EUR":0}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:0">
+                        <div class="form-floating" ng-class="{'bg-color-primary': addWealthx }" style="border-radius: 4px 4px 0 0 ">
+                            <input type="number" class="form-control" ng-model="addWealthx" placeholder="Neuer Anlagebetrag"/>
+                            <label>Neuer Anlagebetrag</label>
+                            <button ng-show="addWealthx" ng-click="addWealthx=''" tabindex="-1" type="button"><span class="material-symbols-sharp">cancel</span></button>
+                            <button ng-hide="addWealthx" tabindex="-1" type="button"><span class="material-symbols-sharp">add</span></button>
+                        </div>
+                    </td>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,21 +111,12 @@
                 </tbody>
             </table>
 
-            <div class="list" style="display: none">
-                <div class="list-item">
-                    <div class="material-symbols-sharp">warning</div>
-                    <div class="list-text">
-                        <div class="list-title">Title</div>
-                        <div class="list-subtitle">Subtitle</div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <div class="material-symbols-sharp">warning</div>
-                    <div class="list-text">
-                        <div class="list-title">Title</div>
-                    </div>
-                </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: {{master.wealth.liqui/master.wealth.santander*100}}%; background: var(--primary-color-40)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: 5%; background: var(--primary-color-70)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: 5%; background: var(--primary-color-90)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+
         </div>
     </div>
 </div>
