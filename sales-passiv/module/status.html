@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg panel">
+        <div class="col-lg panel fadein" ng-hide="nextWealth">
 
             <canvas id="doughnut" class="chart chart-doughnut"
                     chart-data="data" chart-labels="labels">
@@ -73,8 +73,7 @@
                 <tr>
                     <td style="border: 0; padding: 8px 16px">
                         <button class="btn primary-color"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                                ng-click="nextWealth=true">
                             <span class="material-symbols-sharp">add</span>
                             Vermögen
                         </button>
@@ -111,13 +110,21 @@
                 </tbody>
             </table>
 
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: {{master.wealth.liqui/master.wealth.santander*100}}%; background: var(--primary-color-40)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: 5%; background: var(--primary-color-70)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar" role="progressbar" aria-label="Segment one" style="width: 5%; background: var(--primary-color-90)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-
         </div>
+
+        <div class="col-lg panel fadein" ng-show="nextWealth">
+            <button class="btn primary-color" ng-click="nextWealth=false">
+                <span class="material-symbols-sharp">home</span>
+                zurück
+            </button>
+            <button class="btn primary-color"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                <span class="material-symbols-sharp">add</span>
+                Vermögen
+            </button>
+        </div>
+
     </div>
 </div>
 
