@@ -36,10 +36,10 @@
                                     <label>Betrag</label>
                                 </div>
                                 <input type="month" class="form-control" ng-model="plans.event"/>
-                                <button type="button" class="btn secondary-color" style="min-width: 58px;padding-left: 0;padding-right:0;font-size: 24px" ng-click="showSlide=true">
+                                <button type="button" class="btn secondary filled" style="min-width: 58px;padding-left: 0;padding-right:0;font-size: 24px" ng-click="showSlide=true">
                                     <span class="material-symbols-sharp">tune</span>
                                 </button>
-                                <button type="submit" class="btn primary-color" ng-click="addPlans(plans)">Speichern</button>
+                                <button type="submit" class="btn primary filled" ng-click="addPlans(plans)">Speichern</button>
                             </div>
                             <div class="fadein" ng-show="showSlide" style="padding: 8px 16px">
                                 {{(plans.eventSlide/12).toFixed(1)}} Jahre <span style="color: #5f6368">({{plans.eventSlide}} Monate)</span>
@@ -65,20 +65,13 @@
         <div class="col-lg panel fadein" ng-hide="nextWealth">
 
             <canvas id="doughnut" class="chart chart-doughnut"
-                    chart-data="data" chart-labels="labels">
+                    chart-data="chart.current.data" chart-labels="chart.current.labels">
             </canvas>
 
             <table class="table">
                 <thead>
                 <tr>
-                    <td style="border: 0; padding: 8px 16px">
-                        <button class="btn primary-color"
-                                ng-click="nextWealth=true">
-                            <span class="material-symbols-sharp">add</span>
-                            Vermögen
-                        </button>
-                    </td>
-                    <td style="border: 0; padding: 8px 16px" align="right">
+                    <td style="border: 0; padding: 8px 16px" align="right" colspan="2">
                         <small>CherryBank Vermögen</small>
                         <div>{{master.wealth.santander + addWealthx | currency:"EUR":0}}</div>
                     </td>
@@ -86,20 +79,19 @@
                 <tr>
                     <td colspan="2" style="padding:0">
                         <div class="form-floating" ng-class="{'bg-color-primary': addWealthx }" style="border-radius: 4px 4px 0 0 ">
-                            <input type="number" class="form-control" ng-model="addWealthx" placeholder="Neuer Anlagebetrag"/>
+                            <input type="number" class="form-control" ng-model="$root.addWealthx" placeholder="Neuer Anlagebetrag"/>
                             <label>Neuer Anlagebetrag</label>
-                            <button ng-show="addWealthx" ng-click="addWealthx=''" tabindex="-1" type="button"><span class="material-symbols-sharp">cancel</span></button>
+                            <button ng-show="addWealthx" ng-click="$root.addWealthx=''" tabindex="-1" type="button"><span class="material-symbols-sharp">cancel</span></button>
                             <button ng-hide="addWealthx" tabindex="-1" type="button"><span class="material-symbols-sharp">add</span></button>
                         </div>
                     </td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="account in accountData track by $index">
+                <tr ng-repeat="account in accountData | filter : {internal:true}">
                     <td>
-                        <span class="text-bg-info" ng-hide="account.internal">extern</span>
+                        <span>{{account.title}}</span>
                         <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
-                        {{account.title}}
                         <a href="" ng-hide="account.internal"
                            data-bs-toggle="modal"
                            data-bs-target="#exampleModal"
@@ -108,8 +100,22 @@
                     <td align="right">{{account.amount | currency:"EUR":0}}</td>
                 </tr>
                 </tbody>
+                <thead>
+                <tr>
+                    <td style="border: 0; padding: 8px 16px">
+                        <button class="btn primary tonal"
+                                ng-click="nextWealth=true">
+                            <span class="material-symbols-sharp icon-left">add</span>
+                            Vermögen
+                        </button>
+                        außerhalb CherryBank
+                    </td>
+                    <td style="border: 0; line-height: 40px" align="right">
+                        {{master.wealth.extern | currency:"EUR":0}}
+                    </td>
+                </tr>
+                </thead>
             </table>
-
         </div>
 
         <div class="col-lg panel fadein" ng-show="nextWealth">
@@ -124,8 +130,8 @@
                 Vermögen
             </button>
         </div>
-
     </div>
+
 </div>
 
 <div class="addWealth"></div>
