@@ -90,7 +90,7 @@
                 <input type="range" class="slider" min="0" max="100" ng-model="customerAllocation" ng-change="onchangeRanger()">
                 {{customerAllocation}}
                 <canvas class="chart chart-doughnut"
-                        chart-data="chart.customerAllocation.data" chart-labels="chart.customerAllocation.labels">
+                        chart-data="chart.customerAllocation.data" chart-labels="chart.customerAllocation.labels" chart-colors="[ '#803690', '#00ADF9', '#DCDCDC']">
                 </canvas>
             </div>
         </div>

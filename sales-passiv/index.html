@@ -519,7 +519,7 @@
             $scope.onchangeRanger = function (){
                 $scope.chart.customerAllocation = {
                     data : [
-                        0,
+                        ($scope.kft/($rootScope.master.wealth.santander + $rootScope.addWealthx)*100),
                         $scope.customerAllocation,
                         100 - $scope.customerAllocation
                     ],
