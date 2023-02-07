@@ -118,13 +118,13 @@
                 <span>Neuer Anlagebetrag</span>
                 <span style="float: right">{{addWealthx | currency:"EUR":0}}</span>
             </div>
-            <div ng-repeat="account in accountData | filter : {internal:true} track by $index">
-                <div style="padding: 0 16px">
-                    <span class="material-symbols-sharp" ng-show="account.typ==300 || account.typ==500">folder_open</span>
+            <div ng-repeat="account in accountData | filter : {internal:true} | orderBy: 'typ' track by $index">
+                <div style="padding: 0 16px" ng-if="account.typ<300 || account.typ==500">
+                    <span class="material-symbols-sharp" ng-show="account.typ==500">expand_more</span>
                     <span>{{account.title}}</span>
                     <span style="float: right">{{account.amount | currency:"EUR":0}}</span>
                 </div>
-                <table class="table depot" ng-if="account.data">
+                <table class="table depot" ng-show="account.data">
                     <tbody>
                     <tr ng-repeat="depot in account.data"
                         ng-click="depot.active ? depot.active=null : depot.active=true"
