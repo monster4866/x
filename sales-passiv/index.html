@@ -516,6 +516,17 @@
 
             }
 
+            $scope.onchangeRanger = function (){
+                $scope.chart.customerAllocation = {
+                    data : [
+                        0,
+                        $scope.customerAllocation,
+                        100 - $scope.customerAllocation
+                    ],
+                    labels : ["Liquidität","Sicherheit","Rendite"]
+                }
+            }
+
         }])
 
         ng.controller('offer', ['$scope','$rootScope', function($scope,$rootScope) {

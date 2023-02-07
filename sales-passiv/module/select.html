@@ -15,6 +15,15 @@
     .table.depot tr{
         cursor: pointer;
     }
+    .test tr td {
+        border: 3px solid white;
+        border-collapse: collapse;
+    }
+    .test tr td {
+        background-color: #f2f2f2;
+        padding: 2px;
+        border-radius: 10px;
+    }
 </style>
 <div class="container h-100 popin">
     <div class="row align-items-center h-100">
@@ -38,56 +47,61 @@
             <div ng-show="risk.valid">
                 <hr/>
                 <h3 style="color: #5f6368">Ihre <span style="color: #000">Anlageklasse</span>: {{risk.class}}</h3>
-            </div>
-            <hr/>
-            <table>
-                <tr>
-                    <td></td>
-                    <td>aktuell</td>
-                    <td>aktuell %</td>
-                    <td>empfohlen %</td>
-                    <td>empfohlen</td>
-                    <td>verteilung</td>
-                </tr>
-                <tr>
-                    <td>gesamt</td>
-                    <td>{{master.wealth.santander + addWealthx}}</td>
-                </tr>
-                <tr>
-                    <td>Liq</td>
-                    <td>{{master.wealth.liqui + addWealthx}}</td>
-                    <td>{{(master.wealth.liqui + addWealthx)/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
-                    <td>{{kft/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
-                    <td>{{kft}}</td>
-                </tr>
-                <tr>
-                    <td>Sec</td>
-                    <td>{{master.wealth.sec}}</td>
-                    <td>{{master.wealth.sec/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
-                    <td>{{(1-(kft/(master.wealth.santander + addWealthx)))*portfolio.sec*100 | number : '1.2'}}%</td>
-                    <td>{{(master.wealth.santander + addWealthx-kft)*portfolio.sec}}</td>
-                    <td>{{((master.wealth.santander + addWealthx -kft)*portfolio.sec)-master.wealth.sec}}</td>
-                </tr>
-                <tr>
-                    <td>Ren</td>
-                    <td>{{master.wealth.ren}}</td>
-                    <td>{{master.wealth.ren/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
-                    <td>{{(1-(kft/(master.wealth.santander + addWealthx)))*portfolio.ren*100 | number : '1.2'}}%</td>
-                    <td>{{(master.wealth.santander + addWealthx-kft)*portfolio.ren}}</td>
-                    <td>{{((master.wealth.santander + addWealthx -kft)*portfolio.ren)-master.wealth.ren}}</td>
+                <hr/>
+                <table class="test">
+                    <tr>
+                        <td></td>
+                        <td>aktuell</td>
+                        <td>aktuell %</td>
+                        <td>empfohlen %</td>
+                        <td>empfohlen</td>
+                        <td>verteilung</td>
+                    </tr>
+                    <tr>
+                        <td>gesamt</td>
+                        <td>{{master.wealth.santander + addWealthx}}</td>
+                    </tr>
+                    <tr>
+                        <td>Liq</td>
+                        <td>{{master.wealth.liqui + addWealthx}}</td>
+                        <td>{{(master.wealth.liqui + addWealthx)/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
+                        <td>{{kft/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
+                        <td>{{kft}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sec</td>
+                        <td>{{master.wealth.sec}}</td>
+                        <td>{{master.wealth.sec/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
+                        <td>{{(1-(kft/(master.wealth.santander + addWealthx)))*(customerAllocation) | number : '1.2'}}%</td>
+                        <td>{{(master.wealth.santander + addWealthx-kft)*(customerAllocation/100) | number : '1.2'}}</td>
+                        <td>{{((master.wealth.santander + addWealthx -kft)*(customerAllocation/100))-master.wealth.sec | number : '1.2'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ren</td>
+                        <td>{{master.wealth.ren}}</td>
+                        <td>{{master.wealth.ren/(master.wealth.santander + addWealthx)*100 | number : '1.2'}}%</td>
+                        <td>{{(1-(kft/(master.wealth.santander + addWealthx)))*(100-customerAllocation) | number : '1.2'}}%</td>
+                        <td>{{(master.wealth.santander + addWealthx-kft)*(1-(customerAllocation/100)) | number : '1.2'}}</td>
+                        <td>{{((master.wealth.santander + addWealthx -kft)*(1-(customerAllocation/100)))-master.wealth.ren | number : '1.2'}}</td>
 
-                </tr>
-            </table>
+                    </tr>
+                </table>
+                <hr/>
+                <input type="range" class="slider" min="0" max="100" ng-model="customerAllocation" ng-change="onchangeRanger()">
+                {{customerAllocation}}
+                <canvas class="chart chart-doughnut"
+                        chart-data="chart.customerAllocation.data" chart-labels="chart.customerAllocation.labels">
+                </canvas>
+            </div>
         </div>
 
         <div class="col fadein" ng-hide="risk.valid">
             <h3 style="color: #5f6368">Bitte legen Sie Ihr <span style="color: #000">Risikoprofil</span> fest.</h3>
             <div>Welcher Anlegertyp sind Sie?</div>
             <hr/>
-            <div>
+            <p>
                 Portfolios, die zu Ihnen passen: Wir bieten unterschiedliche Anlagestrategien, mit denen Sie Ihre individuellen Ziele erreichen.
-            </div>
-            <hr/>
+            </p>
             <div class="footer"></div>
         </div>
         <div class="col-lg panel fadein" ng-show="risk.valid">
@@ -100,12 +114,12 @@
             </div>
             <hr/>
             <p>{{master.wealth.santander + addWealthx | currency:"EUR":0}} | CherryBank Vermögen</p>
-            <div>
+            <div style="padding: 0 16px">
                 <span>Neuer Anlagebetrag</span>
                 <span style="float: right">{{addWealthx | currency:"EUR":0}}</span>
             </div>
             <div ng-repeat="account in accountData | filter : {internal:true} track by $index">
-                <div>
+                <div style="padding: 0 16px">
                     <span class="material-symbols-sharp" ng-show="account.typ==300 || account.typ==500">folder_open</span>
                     <span>{{account.title}}</span>
                     <span style="float: right">{{account.amount | currency:"EUR":0}}</span>

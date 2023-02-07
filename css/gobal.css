@@ -380,10 +380,11 @@ h1{
 
 /* Mouse-over effects */
 .slider::-webkit-slider-thumb:hover,
-.slider:focus::-webkit-slider-thumb{
+.slider:active::-webkit-slider-thumb{
     outline-width: 10px;
+    background: var(--primary-color-50);
 }
-.slider:focus::-webkit-slider-thumb{
+.slider:active::-webkit-slider-thumb{
     outline-color: rgba(0,0,0,0.12);
 }
 
