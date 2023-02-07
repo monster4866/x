@@ -219,7 +219,18 @@
             $locationProvider.hashPrefix('!');
             ChartJsProvider.setOptions({
                 chartColors: [ '#803690','#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-                responsive: false
+                responsive: false,
+                tooltips: {
+                    enabled: true,
+                    mode: 'single',
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            let label = data.labels[tooltipItem.index];
+                            let datasetLabel = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ': ' + datasetLabel.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.').slice(0,-3) + ' EUR';
+                        }
+                    }
+                }
             });
         }])
 
@@ -299,7 +310,7 @@
 
                 /* Get Liqudidität */
                 $rootScope.master.wealth.liqui = $scope.accountData.filter(function (obj) {
-                    return obj.internal === true && obj.typ < 300 || obj.active;
+                    return obj.internal === true && obj.typ < 300 || obj.active === true;
                 }).map(x => Number(x.amount)).reduce((x, y) => x + y, 0);
 
                 /* Get Sicherheit */
@@ -329,25 +340,26 @@
                 rebels2.forEach(function (item){
                     item.data.forEach(function (item, index){
 
-                        if(item.sell){
-                            xx = xx + item.selectAmount
+                        if(item.active){
+                            xx = xx + (item.stk * item.price)
                         }
                     })
                 })
 
-                $rootScope.master.wealth.selectAmount = rebels1.map(x => Number(x.selectAmount)).reduce((x, y) => x + y, 0) + xx;
+                $rootScope.master.wealth.selectAmount = xx;
+                $rootScope.master.wealth.ren = $rootScope.master.wealth.ren - xx;
+                $rootScope.master.wealth.liqui = $rootScope.master.wealth.liqui + xx;
 
                 /* Charts */
                 $rootScope.chart.current = {
                     data : [
-                        0,
+                        $rootScope.addWealthx,
                         $rootScope.master.wealth.liqui,
                         $rootScope.master.wealth.sec,
                         $rootScope.master.wealth.ren
                     ],
                     labels : ["Neue Liquidität","Liquidität","Sicherheit","Rendite"]
                 }
-
             }, true);
 
             /* NAV */
@@ -449,7 +461,11 @@
                 delete $scope.slave;
                 delete $scope.selected;
             }
-            $scope.editWealth = function (id){
+            $scope.editWealth = function (obj){
+                $scope.slave = $scope.accountData[$scope.accountData.indexOf(obj)];
+                $scope.accountData.splice($scope.accountData.indexOf(obj), 1);
+
+                return;
                 $scope.slave = $scope.accountData[id];
                 $scope.slave.select = {typ: $scope.accountData[id].typ, title: $scope.accountData[id].title}
                 $scope.selected = $scope.accountData[id].typ;

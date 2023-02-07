@@ -102,33 +102,48 @@
                 </tbody>
                 <thead>
                 <tr>
-                    <td style="border: 0; padding: 8px 16px">
+                    <td style="border: 0; line-height: 40px; color: #5f6368" colspan="2">
+                        <span ng-show="master.wealth.extern">{{master.wealth.extern | currency:"EUR":0}}</span>
                         <button class="btn primary tonal"
-                                ng-click="nextWealth=true">
+                                ng-click="nextWealth=true" style="float: right">
                             <span class="material-symbols-sharp icon-left">add</span>
                             Vermögen
                         </button>
-                        außerhalb CherryBank
-                    </td>
-                    <td style="border: 0; line-height: 40px" align="right">
-                        {{master.wealth.extern | currency:"EUR":0}}
                     </td>
                 </tr>
                 </thead>
             </table>
+            <div class="footer"></div>
         </div>
 
         <div class="col-lg panel fadein" ng-show="nextWealth">
-            <button class="btn primary-color" ng-click="nextWealth=false">
-                <span class="material-symbols-sharp">home</span>
+            <button class="btn primary tonal" ng-click="nextWealth=false">
+                <span class="material-symbols-sharp icon-left">home</span>
                 zurück
             </button>
-            <button class="btn primary-color"
+            <button class="btn primary filled"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
-                <span class="material-symbols-sharp">add</span>
+                <span class="material-symbols-sharp icon-left">add</span>
                 Vermögen
             </button>
+            <hr/>
+            <table class="table">
+                <tbody>
+                <tr ng-repeat="account in accountData | filter : {internal:'!true'} track by $index">
+                    <td>
+                        <span>{{account.title}}</span>
+                        <span class="text-bg-warning" ng-show="account.typ === 300">fällig am {datum}</span>
+                        <a href="" ng-hide="account.internal"
+                           data-bs-toggle="modal"
+                           data-bs-target="#exampleModal"
+                           ng-click="editWealth(account)">edit</a>
+                    </td>
+                    <td align="right">{{account.amount | currency:"EUR":0}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="footer"></div>
         </div>
     </div>
 
