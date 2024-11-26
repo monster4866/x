@@ -1,0 +1,228 @@
+<html lang="de" ng-app="app" ng-controller="AppController" class="ng-scope">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Title</title>
+    <style>
+        html,body{
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            display:flex;
+        }
+        .menu {
+            background: #FFF;
+            border-radius: 50px;
+            box-shadow: 0 1px 2px rgba(32, 33, 36, .15), 0 1px 8px rgba(32, 33, 36, .08);
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 8px 5px;
+            margin: 0 auto;
+            width: fit-content;
+            margin-top: 32px;
+        }
+        .menu > a {
+            border-radius: 24px;
+            margin: 0 3px;
+        }
+        .cardx {
+            animation: 0.25s ease 0s 1 slideZoom;
+        }
+
+        @keyframes slideZoom {
+            0% {-webkit-transform: scale(0);opacity: 0;}
+            60% {-webkit-transform: scale(1.05)}
+            100% {-webkit-transform: scale(1)}
+        }
+
+        .btn-fab{
+            padding: 0;
+            border-radius: 28px;
+            height: 56px;
+            width: 56px;
+            line-height: 56px;
+            font-size: 24px;
+        }
+
+        /* animation */
+        @keyframes zoomin-animation {
+            0% {-webkit-transform: translate3d(0,32px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+
+        .popin{
+            animation: 0.3s ease 0s forwards 1 zoomin-animation;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+        @keyframes zoomin-animation {
+            0% {-webkit-transform: translate3d(0,-16px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+
+        .popin-bottom{
+            animation: 0.3s ease 0s forwards 1 zoomin-animation;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+
+        .table td{
+            background: rgba(0,0,0,0.04);
+        }
+
+        /*vforms*/
+        .form-container{
+            position: relative;
+            display: flex;
+        }
+        .form-control,
+        .form-select{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            background: rgba(0,0,0,0.08);
+            cursor: pointer;
+            border: none;
+            line-height: 24px;
+            border-radius: 4px 4px 0 0;
+            padding: 16px 16px;
+            transition: .25s ease all;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+        }
+        .form-container > .material-symbols-sharp{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            font-size: 24px;
+            padding: 0 16px 0 12px;
+            line-height: 56px;
+        }
+        .form-control:focus,
+        .form-select:focus{
+            background: rgba(0,0,0,0.04);
+            box-shadow: none;
+            border-color: var(--primary-color-40);
+        }
+        .form-select:hover:not(:focus),
+        .form-control:hover:not(:focus){
+            background: rgba(0,0,0,0.12);
+
+        }
+        .form-container > .append{
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: 0 16px 0 12px;
+            line-height: 56px;
+        }
+        .form-container > .form-control:nth-child(2),
+        .form-container > label:nth-child(3){
+            padding-left: 52px;
+        }
+
+        .slide{
+            width: 56px;
+            transition: all 0.3s ease;
+            background: #f2f2f2;
+        }
+        .slide:hover{
+            width: 256px;
+        }
+        .viewpoint{
+            width: 100%;
+        }
+        .addItems{
+
+        }
+    </style>
+</head>
+<body>
+  <div class="slide">
+      menu
+  </div>
+  <div class="viewpoint">
+      <div class="container h-100">
+          <div class="row align-items-center h-100">
+              <div class="col popin">
+                  <div>
+                      <h5 style="color:#999">Überblick für den Durchblick,</h5>
+                      <h5>deine Finanzen.</h5>
+                  </div>
+                  <div class="addItems">
+                      <div class="input-group" style="">
+                          <input class="form-control" placeholder="+ Position hinzufügen" ng-model="add"/>
+                          <select class="form-select" aria-label="Default select example" ng-show="add">
+                              <option selected>Open this select menu</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                          </select>
+                      </div>
+                      <div class="popin-bottom" ng-show="add" style="animation-delay: 0s;padding:8px 16px; background: #fad8fd;border-bottom-left-radius: 24px;border-bottom-right-radius: 24px;z-index:-1">test</div>
+                  </div>
+
+                  <div style="padding: 4px 0">
+                  </div>
+                  <div class="" style="background-color: #d6e3ff;border-radius: 24px">
+                      <div style="padding: 18px">
+                          links<br/>hello world
+                      </div>
+                      <div>
+                          <table class="table">
+                              <tr>
+                                  <td>⚠ Konto</td>
+                                  <td>3.000</td>
+                                  <td>-2.000</td>
+                                  <td>100,00</td>
+                              </tr>
+                              <tr>
+                                  <td>Kredit</td>
+                                  <td>3.000</td>
+                                  <td>-2.000</td>
+                                  <td>100,00</td>
+                              </tr>
+                          </table>
+                      </div>
+                      <div style="padding: 18px">
+                          links<br/>hello world
+                      </div>
+                  </div>
+                  <div style="margin-top: 8px">
+                      <a href="#" class="btn btn-light">Amazon</a>
+                      <a href="#" class="btn btn-light">Paypal</a>
+                      <a href="#" class="btn btn-light">Klana</a>
+                  </div>
+              </div>
+              <div class="col popin" style="animation-delay: 0.35s;">
+                  <div>⚠ Ihre Gesamtbelastung ist zu hoch</div>
+                  <div style="background-color: #bec6dc;border-radius: 24px;padding: 18px">
+                      <div>Gesamtausgaben</div>
+                      <div><h1>100,00 Eur</h1></div>
+                  </div>
+                  <div>
+                      <p><h3>Ihre Ausgaben im Überblick</h3></p>
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                  </div>
+                  <div>Design and Build @Patrick Nolte 2024-2025</div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const ng = angular.module('app', []);
+
+    ng.controller('AppController', ['$scope', function($scope) {
+
+    }])
+</script>
+</html>
