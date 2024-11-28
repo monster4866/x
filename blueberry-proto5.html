@@ -271,13 +271,19 @@
         }
         .btn.fab.active > div{
             max-width: 150px;
-            transition: max-width .3s;
+            transition: max-width .2s;
         }
         .colordot{
             box-shadow: var(--mat-menu-container-elevation-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
         }
         .q{
             background: #f0f4f9;
+        }
+        svg{
+            transition: 0.3s;
+        }
+        .active svg{
+            transform: rotate(180deg);
         }
 
         /* dropdown-menu */
@@ -321,11 +327,9 @@
   <div class="viewpoint">
       <div class="container h-100">
           <div class="row align-items-center h-100">
-              <div class="col animation-view">
-                  <div ng-view></div>
-                  <div>
-                      {{testdata}}
-                  </div>
+              <div class="col">
+                  <div ng-view class="animation-view"></div>
+
               </div>
               <div class="col animation-control">
                   <a href="#!/home" class="card" ng-class="{'active': $location.split('/')[1] == 'home' }">
