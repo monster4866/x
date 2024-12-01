@@ -178,7 +178,6 @@
             border-radius: 24px;
         }
         .card:hover:not(.active){
-            -webkit-transform: scale(1.05);
         }
         .card:focus{
             xborder-radius: 48px;
@@ -292,6 +291,9 @@
         .table{
             font-size: inherit;
         }
+        .table tr:hover{
+            background: rgba(25,25,25,0.08);
+        }
         .table tr td{
             padding: 8px 24px;
             background: transparent;
@@ -344,31 +346,33 @@
                         <div class="row">
                             <div class="col">
                                 <div>Kreditwunsch</div>
-                                <div><h2>{{data.wb}}</h2></div>
+                                <div><h2>{{data.status.wb}}</h2></div>
                             </div>
                             <div class="col">
-                                <div ng-show="data.wr">Wunschrate</div>
-                                <div ng-hide="data.wr">Ratenvorschlag</div>
-                                <div><h2>{{data.wb*0.02}}</h2></div>
+                                <div ng-show="data.status.wr">Wunschrate</div>
+                                <div ng-hide="data.status.wr">Ratenvorschlag</div>
+                                <div><h2>{{data.status.wb*0.03}}</h2></div>
                             </div>
                         </div>
                       </div>
                   </a>
-                  <a href="#!/home" class="card" ng-class="{'active': $location.split('/')[1] == 'home' }">
-                      <div class="card-content">
-                          <div>Gesamtausgaben</div>
-                          <div><h2>{{data2}} Eur</h2></div>
-                      </div>
-                      <div class="card-subcontent" ng-show="data2>49">Hinweis anzeigen</div>
-                  </a>
-                  <a href="#!/home2" class="card"  ng-class="{'active': $location.split('/')[1] == 'home2' }">
-                      <div class="card-content">
-                          <div>Vermögensaufbau</div>
-                          <div><h2>0,00 Eur</h2></div>
-                      </div>
-                      <div class="card-subcontent" ng-show="addx"></div>
-                  </a>
-                  <div>
+                  <div ng-show="data.status.wb">
+                      <a href="#!/home" class="card" ng-class="{'active': $location.split('/')[1] == 'home' }">
+                          <div class="card-content">
+                              <div>Gesamtausgaben</div>
+                              <div><h2>{{data2}} Eur</h2></div>
+                          </div>
+                          <div class="card-subcontent" ng-show="data2>49">Hinweis anzeigen</div>
+                      </a>
+                      <a href="#!/home2" class="card"  ng-class="{'active': $location.split('/')[1] == 'home2' }">
+                          <div class="card-content">
+                              <div>Vermögensaufbau</div>
+                              <div><h2>0,00 Eur</h2></div>
+                          </div>
+                          <div class="card-subcontent" ng-show="addx"></div>
+                      </a>
+                  </div>
+                  <div ng-show="!data.status.wb">
                       <p><h3>Ihre Ausgaben im Überblick</h3></p>
                       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
                   </div>
@@ -409,10 +413,10 @@
         return {
             restrict: 'C',
             template:
-                '                  <div class="input-group">\n' +
-                '                      <input type="text" class="form-control" placeholder="Wunschbetrag" ng-model="data.wb">\n' +
-                '                      <input type="text" class="form-control" placeholder="Ratenvorschlag {{data.wb*0.02}}" ng-model="data.wr">\n' +
-                '                  </div>'
+                '<div class="input-group">' +
+                '  <input type="text" class="form-control" placeholder="Wunschbetrag" ng-model="data.status.wb">' +
+                '  <input type="text" class="form-control" placeholder="Ratenvorschlag {{data.status.wb*0.03}}" ng-model="data.status.wr">' +
+                '</div>'
         };
     }])
 
@@ -430,8 +434,8 @@
                 '   </div>\n' +
                 '</form>' +
                 '<table class="table">' +
-                '   <tr ng-repeat="d in data.active">' +
-                '       <td>{{d.title}}</td>' +
+                '   <tr ng-repeat="d in data.active" ng-click="outgoingsedit($index)">' +
+                '       <td>{{d.title}}<br/><span class="grey">Produktart</span></td>' +
                 '       <td align="right">{{d.amount}}</td>' +
                 '   </tr>' +
                 '</table>' +
@@ -449,7 +453,7 @@
     }])
 
     ng.controller('AppController', ['$scope', '$rootScope', function($scope,$rootScope) {
-        $scope.data = {active:[]};
+        $scope.data = {active:[],outgoings :[]};
         $scope.testdata = [
             { title : "Sand am Meer Bank", amount : "100"}
         ];
@@ -463,9 +467,12 @@
             $scope.q="";
             $scope.amount="";
         }
+        $rootScope.outgoingsedit = function (obj){
+            $scope.data.active.splice(obj, 1);
+        }
 
         $scope.$watch("data", function() {
-            $scope.data2 = $scope.data.active.map(x => Number(x.amount)).reduce((x, y) => x + y, 0) + Number($scope.data.wb*0.02);
+            $scope.data2 = $scope.data.active.map(x => Number(x.amount)).reduce((x, y) => x + y, 0) + Number($scope.data.status.wb*0.03);
         }, true);
     }])
 </script>
