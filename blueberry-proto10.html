@@ -342,6 +342,9 @@
             font-size: inherit;
             color: #555;
         }
+        .table tfoot tr td{
+            padding: 0;
+        }
         /* tabs */
         .nav.nav-tabs{
             background: rgba(0,0,0,0.08);
@@ -418,22 +421,27 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr ng-repeat="d in data.active">
-                          <td><div>{{d.title}} <span class="grey">Produktart</span></div></td>
+                      <tr ng-repeat="d in data.active" ng-mouseover="actionbtn=$index" ng-mouseleave="actionbtn=undefined">
+                          <td>
+                              <div ng-show="actionbtn==$index"><button><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z"/></svg></button></div>
+                              <div>{{d.title}} <span class="grey">Produktart</span></div>
+                          </td>
                           <td></td>
                           <td></td>
                           <td align="right">{{d.amount}}</td>
                       </tr>
                       </tbody>
                   </table>
-                  <form>
+                  <form ng-submit="addPlans()">
                       <div class="input-group" style="border-radius: 4px 4px 16px 16px;overflow: hidden">
                           <input class="form-control q2" placeholder="Produkte hinzufügen" ng-model="q"/>
+                          <div ng-show="q" class="col-6" style="display: flex">
+                              <input type="text" class="form-control q2" placeholder="Rate" ng-model="amount">
+                              <input type="text" class="form-control q2" placeholder="Rate" ng-model="amount">
+                              <input type="text" class="form-control q2" placeholder="Rate" ng-model="amount" style="text-align: right">
+                          </div>
                       </div>
-                      <div ng-show="q">
-                          <input type="text" class="form-control q2" placeholder="Rate" ng-show="q" ng-model="amount">
-                          <button type="submit" class="btn btn-primary" ng-click="addPlans()">Speichern</button>
-                      </div>
+                      <button type="submit" class="btn btn-primary" ng-click="addPlans()" style="display: none">Speichern</button>
                   </form>
                   <div ng-show="q">
                       <button class="btn btn-secondary" ng-click="q='PayPal'">PayPal</button>
