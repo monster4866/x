@@ -1,0 +1,583 @@
+<html lang="de" ng-app="app" ng-controller="AppController" class="ng-scope">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ <style>
+        html,body{
+    font-family: sans-serif;
+    font-optical-sizing: auto;
+            font-style: normal;
+            font-variation-settings:
+                    "wdth" 100;
+            background: #fff;
+            color:#1f1f1f;
+            width: 100%;
+            height: 100%;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            display: flex;
+        }
+        html.advisor,body.advisor{
+            background: #CCC;
+            transition: .25s ease all;
+        }
+        @keyframes slideZoom {
+            0% {-webkit-transform: scale(0);opacity: 0;}
+            60% {-webkit-transform: scale(1.05)}
+            100% {-webkit-transform: scale(1)}
+        }
+        /* animation */
+        @keyframes zoomin-animation {
+            0% {-webkit-transform: translate3d(0,32px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+
+        .popin{
+            animation: 0.3s ease 0s forwards 1 zoomin-animation;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+        @keyframes zoomin-animation3 {
+            0% {-webkit-transform: translate3d(0,-32px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+
+        .popin3{
+            animation: 0.3s ease 0s forwards 1 zoomin-animation3;
+            opacity: 0;
+            animation-delay: 0.4s;
+        }
+        @keyframes zoomin-animation2 {
+            0% {-webkit-transform: translate3d(0,-16px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+
+        .popin-bottom{
+            animation: 0.3s ease 0s forwards 1 zoomin-animation2;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+
+        /*vforms*/
+        .form-container{
+            position: relative;
+            display: flex;
+        }
+        .form-control,
+        .form-select{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            background: rgba(0,0,0,0.08);
+            cursor: pointer;
+            border: none;
+            line-height: 24px;
+            border-radius: 4px 4px 0 0;
+            padding: 16px 18px;
+            transition: .25s ease all;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            font-size: inherit;
+        }
+        .form-container > .material-symbols-sharp{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            font-size: 24px;
+            padding: 0 16px 0 12px;
+            line-height: 56px;
+        }
+        .form-control:focus,
+        .form-select:focus{
+            background: rgba(0,0,0,0.04);
+            box-shadow: none;
+            border-color: var(--primary-color-40);
+        }
+        .form-select:hover:not(:focus),
+        .form-control:hover:not(:focus){
+            background: rgba(0,0,0,0.12);
+
+        }
+        .form-container > .append{
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: 0 16px 0 12px;
+            line-height: 56px;
+        }
+        .form-container > .form-control:nth-child(2),
+        .form-container > label:nth-child(3){
+            padding-left: 52px;
+        }
+        .form-control.q2{
+            background: #e9eef6;
+            border: 0;
+        }
+        .search-append{
+            background: #e9eef6;
+            border-radius: 4px 4px 16px 16px;
+
+        }
+        .slide{
+            width: 56px;
+            transition: all 0.3s ease;
+            background: #f2f2f2;
+        }
+        .slide:hover{
+            width: 256px;
+        }
+        .viewpoint{
+            width: 100%;
+        }
+        .addItems{
+
+        }
+        .face{
+            background: #f2f2f2;
+            border-radius: 24px;
+            padding: 18px;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .face.face-btn:hover{
+            -webkit-transform: scale(1.05);
+        }
+    </style>
+    <style>
+        /* animation */
+        @keyframes animation-view-key {
+            0% {-webkit-transform: translate3d(0,32px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+        .animation-view{
+            animation: 0.2s ease 0s forwards 1 animation-view-key;
+            opacity: 0;
+            animation-delay: 0.25s;
+        }
+        @keyframes animation-control-key {
+            0% {-webkit-transform: translate3d(0,-64px,0);;opacity: 0}
+            100% {-webkit-transform: translate3d(0,0,0);opacity:1}
+        }
+        .animation-control{
+            animation: 0.3s ease 0s forwards 1 animation-control-key;
+            opacity: 0;
+            animation-delay: 0.5s;
+        }
+
+        /* Cards */
+        .card{
+            position: relative;
+            margin-bottom: 8px;
+            text-decoration: none;
+            border: 0;
+            overflow: hidden;
+            background: transparent;
+            height: max-content;
+            transition: all 0.35s ease;
+            border-radius: 24px;
+            color:inherit;
+        }
+        .card .card-body{
+            padding: 18px;
+        }
+        .card h2{
+            margin: 0;
+        }
+        .card:hover:not(.active){
+        }
+        .card-content{
+            background: transparent;
+            padding: 24px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .card-content:hover{
+            background: #dcdaf5;
+        }
+        .card.active .card-content{
+            background: #f0f4f9;
+        }
+        .card-subcontent{
+            background: #f8e287;
+            padding: 32px 8px 8px 24px;
+            font-size: 0.75rem;
+            line-height: 1.25rem;
+            margin-top: -24px;
+            z-index: 1;
+            animation: 0.3s ease 0s forwards 1 zoomin-animation2;
+            opacity: 0;
+            animation-delay: 0.1s;
+            border-bottom-right-radius: 24px;
+            border-bottom-left-radius: 24px;
+        }
+        form{
+            margin: 0;
+        }
+        .grey{
+            color: rgba(25,25,25,0.4)
+        }
+        h4{
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        .header{
+            box-sizing: border-box;
+            position: fixed;
+            width: 100%;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content:space-between;
+            line-height: 48px;
+            z-index: 999999;
+            animation-delay: 0.8s;
+            animation-duration: 0.2s;
+        }
+        .header > div{
+            display: inline-flex;
+            width: 100%;
+        }
+        .btn{
+            border: 0;
+            background: rgba(0,0,0,0.04);
+            line-height: 48px;
+            height: 48px;
+            padding: 0 4px;
+            min-width: 48px;
+            display: flex;
+            align-items: center;
+            transition: 0.4s;
+        }
+        .btn.fab{
+            margin: 0;
+            background: transparent;
+        }
+        .btn.fab:hover .btn-inner{
+            background: rgba(0,0,0,0.04);
+        }
+        .btn.fab .btn-inner{
+            padding: 8px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 40px;
+            overflow: hidden;
+        }
+        .btn.fab .btn-inner .btn-inner-text{
+            max-width: 0;
+            transition: all .3s;
+            overflow: hidden;
+            opacity: 0;
+            font-size: 14px;
+            color: rgba(31, 31, 31, 0.38);
+            white-space: nowrap;
+        }
+        .open .btn.fab .btn-inner .btn-inner-text{
+            max-width: 150px;
+            opacity: 1;
+            padding-left: 16px;
+            padding-right: 8px;
+            animation-delay: 0.3s;
+            white-space: nowrap;
+            word-break: keep-all;
+            overflow: hidden;
+        }
+        .colordot{
+            box-shadow: var(--mat-menu-container-elevation-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
+        }
+        .q{
+            background: #f0f4f9;
+        }
+        svg{
+            transition: 0.3s;
+        }
+        .active svg{
+            transform: rotate(180deg);
+        }
+
+        /* dropdown-menu */
+        .dropdown-menu{
+            border:0;
+            box-shadow: var(--mat-menu-container-elevation-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
+        }
+
+        /* table */
+        .table{
+            border-radius: 16px 16px 4px 4px;
+            border: none;
+            background: transparent;
+            overflow: hidden;
+            margin-bottom: 4px;
+            font-size: inherit;
+        }
+        .table tbody tr:hover{
+            background: #e9eef6;
+            cursor: pointer;
+        }
+        .table thead tr{
+            border-bottom: 3px solid #e9eef6;
+            xbackground: #f0f4f9;
+        }
+
+        .table tr td{
+            padding: 8px 18px;
+            background: transparent;
+            border-bottom: none;
+            border-top: 1px solid #e9eef6;
+            line-height: 26px;
+            vertical-align: top;
+        }
+        .table tr:first-child td{
+            border: none;
+        }
+        .table thead tr td{
+            padding: 12px 18px;
+            font-size: inherit;
+            color: #555;
+        }
+        /* tabs */
+        .nav.nav-tabs{
+            background: rgba(0,0,0,0.08);
+            border-radius: 38px;
+            border: 0;
+        }
+        .nav .nav-item .nav-link{
+            padding: 0;
+            line-height: 78px;
+            border: 0;
+            border-radius: 38px;
+            background: transparent;
+        }
+        .nav .nav-item .nav-link.active{
+            background: #f8e287;
+        }
+
+        /* sidebar */
+        .sidebar{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgb(240, 244, 249);
+            width: 72px;
+            padding: 12px 12px;
+            transition: all .3s;
+        }
+        .sidebar.open{
+            width: 320px;
+        }
+        .sidebar.open .btn-title{
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .test-input{
+            background: #FFF !important;
+            border: 2px solid #eee;
+            border-radius: 30px;
+        }
+        .test-input:hover{
+            border-color: #999;
+        }
+    </style>
+</head>
+<body ng-class="{'advisor': advisorview == true }">
+  <div class="viewpoint">
+      <div class="container h-100">
+          <div class="row align-items-center h-100">
+              <div class="col-4">
+                  <a href="#!/home" class="card" ng-class="{'active': $location.split('/')[1] == 'home' }">
+                      <div class="card-content">
+                          <div>Gesamtausgaben</div>
+                          <div><h2>{{data2}} Eur</h2></div>
+                      </div>
+                      <div class="card-subcontent" ng-show="data2>49">Hinweis anzeigen</div>
+                  </a>
+                  <a href="#!/home2" class="card"  ng-class="{'active': $location.split('/')[1] == 'home2' }">
+                      <div class="card-content">
+                          <div>Vermögensaufbau</div>
+                          <div><h2>0,00 Eur</h2></div>
+                      </div>
+                      <div class="card-subcontent" ng-show="addx"></div>
+                  </a>
+              </div>
+              <div class="col-8 animation-view">
+
+                  <table class="table">
+                      <thead>
+                      <tr>
+                          <td class="col-6">Produkt</td>
+                          <td class="col-2" align="right">Limit</td>
+                          <td class="col-2" align="right">Saldo</td>
+                          <td class="col-2" align="right">Rate</td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="d in data.active">
+                          <td><div>{{d.title}} <span class="grey">Produktart</span></div></td>
+                          <td></td>
+                          <td></td>
+                          <td align="right">{{d.amount}}</td>
+                      </tr>
+                      </tbody>
+                  </table>
+                  <form>
+                      <div class="input-group" style="border-radius: 4px 4px 16px 16px;overflow: hidden">
+                          <input class="form-control q2" placeholder="Produkte hinzufügen" ng-model="q"/>
+                      </div>
+                      <div ng-show="q">
+                          <input type="text" class="form-control q2" placeholder="Rate" ng-show="q" ng-model="amount">
+                          <button type="submit" class="btn btn-primary" ng-click="addPlans()">Speichern</button>
+                      </div>
+                  </form>
+                  <div ng-show="q">
+                      <button class="btn btn-secondary" ng-click="q='PayPal'">PayPal</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.3/angular-route.min.js" integrity="sha512-y1qD3hz/IAf8W4+/UMLZ+CN6LIoUGi7srWJ3r1R17Hid8x0yXe+1B5ZelkaL1Mjzedzu0Cg3HBvDG02SAgSzBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const ng = angular.module('app', ['ngRoute']);
+
+
+    ng.config(['$routeProvider', '$locationProvider',function($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/status', {template: '<div class="status"></div>'})
+            .when('/home', {template: '<div class="home">Home</div>'})
+            .when('/home2', {template: '<div>Home2</div>'})
+            .when('/home3', {template: '<div>Home3</div>'})
+            .otherwise({redirectTo: '/home'});
+        $locationProvider.html5Mode(false);
+        $locationProvider.hashPrefix('!');
+    }])
+
+    ng.run(function ($rootScope, $location,$route) {
+        $rootScope.$on('$routeChangeSuccess', function () {
+            $rootScope.$location = $location.path();
+            $rootScope.$route = $route;
+            $rootScope.$ID = $route.current.params.id
+        })
+    })
+
+    ng.directive("status", [function() {
+        return {
+            restrict: 'C',
+            template:
+                '<ul class="nav nav-tabs nav-fill" style="margin-bottom: 18px">' +
+                '  <li class="nav-item">\n' +
+                '    <a class="nav-link active" aria-current="page" href="#">Tab1</a>\n' +
+                '  </li>\n' +
+                '  <li class="nav-item">\n' +
+                '    <a class="nav-link" href="#">Tab2</a>\n' +
+                '  </li>\n' +
+                '</ul>' +
+                '<div class="card">' +
+                '  <div class="card-body">\n' +
+                '    <h5 class="card-title">Card title</h5>\n' +
+                '  </div>' +
+                '  <div class="input-group">' +
+                '    <input type="text" class="form-control" placeholder="Wunschbetrag" ng-model="data.status.wb">' +
+                '    <input type="text" class="form-control" placeholder="Ratenvorschlag {{data.status.wb*0.03}}" ng-model="data.status.wr">' +
+                '  </div>' +
+                '  <div class="card-body">\n' +
+                '    <h5 class="card-title">Card title</h5>\n' +
+                '    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\n' +
+                '  </div>' +
+                '</div>'
+        };
+    }])
+
+    ng.directive("home", [function() {
+        return {
+            restrict: 'C',
+            template:
+                '<form>' +
+                '   <div class="input-group">' +
+                '      <input class="form-control q" placeholder="+ Position hinzufügen" ng-model="$parent.q"/></div>' +
+                '   </div>' +
+                '   <div class="popin-bottom" ng-show="q" style="animation-delay: 0s;padding:8px 16px; background: #fad8fd;border-bottom-left-radius: 24px;border-bottom-right-radius: 24px;z-index:-1">' +
+                '       <input type="text" class="form-control" placeholder="Rate" ng-model="$parent.amount">' +
+                '       <button type="submit" class="btn btn-primary" ng-click="addPlans()">Speichern</button>' +
+                '   </div>\n' +
+                '</form>' +
+                '<p></p>' +
+                '<table class="table">' +
+                '   <thead>' +
+                '   <tr>' +
+                '     <td class="col-6">Produkte</td>' +
+                '     <td class="col-2" align="right">Limit</td>' +
+                '     <td class="col-2" align="right">Saldo</td>' +
+                '     <td class="col-2" align="right">Rate</td>' +
+                '   </tr>' +
+                '   </thead>' +
+                '   <tr ng-repeat="d in data.active" ng-mouseover="actionbtn=$index" ng-mouseleave="actionbtn=undefined">' +
+                '       <td>' +
+                '           <div ng-show="actionbtn==$index">' +
+                '               <a href="" ng-click="outgoingsedit($index)">del</a>' +
+                '               <a href="" ng-click="outgoingsedit($index)">edit</a>' +
+                '           </div>' +
+                '           <div>{{d.title}} <span class="grey">Produktart</span></div>' +
+                '       </td>' +
+                '       <td></td>' +
+                '       <td></td>' +
+                '       <td align="right">{{d.amount}}</td>' +
+                '   </tr>' +
+                '</table>' +
+                '<div class="search-append">' +
+                '   <div class="input-group" style="border-radius: 4px 4px 16px 16px;overflow: hidden">' +
+                '       <input class="form-control q2" placeholder="Produkte hinzufügen" ng-model="$parent.q"/>' +
+                '       <input type="text" class="form-control q2" placeholder="Rate" ng-show="q" ng-model="$parent.amount">' +
+                '   </div>' +
+                '   <div ng-show="q">' +
+                'test' +
+                '   </div>' +
+                '</div>' +
+                '<div class="ad1"></div>' +
+                '<div style="word-break: break-all;">{{data}}</div>'
+        };
+    }])
+
+    ng.directive("ad1", [function() {
+        return {
+            restrict: 'C',
+            template:
+                '<h4>Lorem Ipsum. <span class="grey">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span></h4>'
+        };
+    }])
+
+    ng.controller('AppController', ['$scope', '$rootScope', function($scope,$rootScope) {
+        $scope.data = {active:[],outgoings :[]};
+        $scope.testdata = [
+            { title : "Sand am Meer Bank", amount : "100"}
+        ];
+
+        $rootScope.addPlans = function (){
+            if(!$scope.q) return;
+            $scope.data.active.push({
+                title: $scope.q,
+                amount: $scope.amount
+            })
+            $scope.q="";
+            $scope.amount="";
+        }
+        $rootScope.outgoingsedit = function (obj){
+            $scope.data.active.splice(obj, 1);
+        }
+
+        $scope.$watch("data", function() {
+            $scope.data2 = $scope.data.active.map(x => Number(x.amount)).reduce((x, y) => x + y, 0) + Number($scope.data.status.wb*0.03);
+        }, true);
+    }])
+</script>
+</html>
