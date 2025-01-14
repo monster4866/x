@@ -331,23 +331,29 @@
         }
 
         .table tr td{
-            padding: 8px 18px;
+            padding: 8px 9px;
             background: transparent;
             border-bottom: none;
             border-top: 1px solid #e9eef6;
-            line-height: 26px;
+            line-height: 28px;
             vertical-align: top;
         }
         .table tr:first-child td{
             border: none;
         }
         .table thead tr td{
-            padding: 12px 18px;
+            padding: 12px 9px;
             font-size: inherit;
             color: #555;
         }
         .table tfoot tr td{
             padding: 0;
+        }
+        .table tr td:first-child{
+            padding-left: 18px;
+        }
+        .table tr td:last-child{
+            padding-right: 18px;
         }
         /* tabs */
         .nav.nav-tabs{
@@ -391,6 +397,17 @@
         .test-input:hover{
             border-color: #999;
         }
+        .btn-mini-fab{
+            padding: 0;
+            width: 28px;
+            line-height: 28px;
+            height: 28px;
+            background: rgba(0,0,0,0.08);
+            min-width: auto;
+            display: flex;
+            justify-content: center;
+            border-radius: 14px;
+        }
     </style>
 </head>
 <body ng-class="{'advisor': advisorview == true }">
@@ -426,7 +443,7 @@
                   </a>
               </div>
               <div class="col-8 animation-view">
-                  <div class="row">
+                  <div class="row" style="padding: 0 18px">
                       <div class="col">
                           <label for="customRange1" class="form-label">Kreditwunsch</label>
                           <h3>{{loanwish*1000}} Euro</h3>
@@ -441,6 +458,10 @@
                   <table class="table">
                       <thead>
                       <tr>
+                          <td>
+                              <button class="btn btn-mini-fab">
+                                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M440-440h280v-280H440v280ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>                              </button>
+                          </td>
                           <td class="col-6">Produkt</td>
                           <td class="col-2" align="right">Limit</td>
                           <td class="col-2" align="right">Saldo</td>
@@ -448,7 +469,12 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr ng-repeat="d in data.active" ng-mouseover="actionbtn=$index" ng-mouseleave="actionbtn=undefined">
+                      <tr ng-repeat="d in data.active" xng-mouseover="actionbtn=$index" ng-mouseleave="actionbtn=undefined">
+                          <td>
+                              <button class="btn btn-mini-fab">
+                                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4f4f4f"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm40-83q119-15 199.5-104.5T800-480q0-123-80.5-212.5T520-797v634Z"/></svg>
+                              </button>
+                          </td>
                           <td>
                               <div ng-show="actionbtn==$index"><button><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#5f6368"><path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z"/></svg></button></div>
                               <div>
